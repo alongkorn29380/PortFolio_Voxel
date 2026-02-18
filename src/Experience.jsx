@@ -4,7 +4,8 @@ import { Suspense } from 'react'
 
 import Terrain from './components/Terrain/Terrain'
 
-export default function Experience(){
+export default function Experience()
+{
     return(
         <>
             // Efficiency
