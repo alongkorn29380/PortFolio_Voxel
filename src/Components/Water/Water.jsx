@@ -35,7 +35,7 @@ export default function Water({ areaSize = 50, level = -0.3 })
     const {size, camera} = useThree()
     const depthBuffer = useDepthBuffer({ size: 1024, frames: 1 })
 
-    // Controls
+    // Debug
     const { FoamThreshold, opacity, colorDeep, colorShallow } = useControls('Water', {
         FoamThreshold:{
             value: 1.0,

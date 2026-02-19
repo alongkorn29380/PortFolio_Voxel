@@ -1,5 +1,6 @@
 import { useGLTF } from "@react-three/drei"
 import Water from '../Water/Water.jsx'
+import { RigidBody } from '@react-three/rapier'
 
 export default function Terrain()
 {
@@ -9,8 +10,16 @@ export default function Terrain()
 
     return (
         <>
+        <RigidBody
+            type = 'fixed'
+            colliders = "trimesh"
+            restitution = { 0.2 }
+            friction = { 0 }
+        >
             <primitive object={ scene } />
-            <Water areaSize={ 100 } level={ -0.2 } />
+        </RigidBody>
+
+        <Water areaSize = { 100 } level = { - 0.2 } />
         </>
     )
 }
