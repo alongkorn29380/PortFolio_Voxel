@@ -6,6 +6,8 @@ import { useControls } from 'leva'
 
 import Terrain from './components/Terrain/Terrain.jsx'
 import Player from './components/Player/Player.jsx'
+import Light from './Components/Light/Light.jsx'
+import TimeProvider from './Components/Context/TimeContext.jsx'
 
 export default function Experience()
 {
@@ -42,7 +44,7 @@ export default function Experience()
         }
     },
         { collapsed: true })
-        
+
     return(
         <>
             // Efficiency
@@ -51,22 +53,23 @@ export default function Experience()
             // Camera controls
             <OrbitControls makeDefault />
 
-            <ambientLight intensity={1.5} /> 
-            
-            <directionalLight position={[5, 5, 5]} intensity={2} />
+            <TimeProvider>
+            <Light />
 
-            <Physics debug={debug} gravity={[gravity.x, gravity.y, gravity.z]} >
+                <Physics debug={debug} gravity={[gravity.x, gravity.y, gravity.z]} >
 
-                <Player 
-                    position={[2, 2, 5]} 
-                    cameraActive={!debugcamera}
-                />
+                    <Player 
+                        position={[2, 2, 5]} 
+                        cameraActive={!debugcamera}
+                    />
 
-                <Suspense fallback={null}>
-                    <Terrain />
-                </Suspense>
+                    <Suspense fallback={null}>
+                        <Terrain />
+                    </Suspense>
 
-            </Physics>
+                </Physics>
+
+            </TimeProvider>
         </>
     )
 }
