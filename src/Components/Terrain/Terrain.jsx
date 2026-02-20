@@ -1,12 +1,33 @@
 import { useGLTF } from "@react-three/drei"
-import Water from '../Water/Water.jsx'
 import { RigidBody } from '@react-three/rapier'
+import { useEffect } from "react"
+
+import Water from '../Water/Water.jsx'
+
+import ForestBushes from '../Forest/ForestBushes.jsx'
+import DesertBushes from '../Desert/DesertBushes.jsx'
+import MagicBushes from '../Magic/MagicBushes.jsx'
+import SnowBushes from '../Snow/SnowBushes.jsx'
+import RobotBushes from '../Robot/RobotBushes.jsx'
 
 export default function Terrain()
 {
-    const { scene } = useGLTF('/Models/Terrain/Terrain.glb')
+    const { scene, nodes } = useGLTF('/Models/Terrain/Terrain.glb')
 
-    // console.log(scene)
+    // console.log(scene, nodes)
+
+    useEffect(() => {
+        scene.traverse((child) => {
+            if (child.isMesh) {
+                child.receiveShadow = true 
+                child.castShadow = true    
+
+                if (child.name.includes('Bushes')) {
+                    child.visible = false
+                }
+            }
+        })
+    }, [scene])
 
     return (
         <>
@@ -20,6 +41,12 @@ export default function Terrain()
         </RigidBody>
 
         <Water areaSize = { 100 } level = { - 0.2 } />
+
+        <ForestBushes nodes = { nodes} />
+        <DesertBushes nodes = { nodes} />
+        <MagicBushes nodes = { nodes} />
+        <SnowBushes nodes = { nodes} />
+        <RobotBushes nodes = { nodes} />
         </>
     )
 }

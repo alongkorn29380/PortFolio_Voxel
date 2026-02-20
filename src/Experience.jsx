@@ -1,8 +1,9 @@
 import { OrbitControls } from '@react-three/drei'
 import { Perf } from 'r3f-perf'
-import { Physics, RigidBody } from '@react-three/rapier'
+import { Physics } from '@react-three/rapier'
 import { Suspense } from 'react'
 import { useControls } from 'leva'
+import { EffectComposer, Bloom } from '@react-three/postprocessing'
 
 import Terrain from './components/Terrain/Terrain.jsx'
 import Player from './components/Player/Player.jsx'
@@ -53,6 +54,7 @@ export default function Experience()
             // Camera controls
             <OrbitControls makeDefault />
 
+            // Light and time
             <TimeProvider>
             <Light />
 
@@ -68,6 +70,15 @@ export default function Experience()
                     </Suspense>
 
                 </Physics>
+
+                <EffectComposer disableNormalPass>
+                    <Bloom 
+                        luminanceThreshold={1.0} 
+                        mipmapBlur 
+                        intensity={1.5} 
+                        radius={0.4}    
+                    />
+                </EffectComposer>
 
             </TimeProvider>
         </>

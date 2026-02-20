@@ -27,7 +27,7 @@ const WaterMaterial = shaderMaterial(
     waterVertexShader,
     waterFragmentShader
 )
-extend({ WaterMaterial})
+extend({ WaterMaterial })
 
 export default function Water({ areaSize = 50, level = -0.3 })
 {
@@ -51,7 +51,7 @@ export default function Water({ areaSize = 50, level = -0.3 })
         },
         colorDeep: ColorWater.deep,
         colorShallow: ColorWater.shallow,
-    })
+    }, { collapsed: true } )
 
 
     useFrame((state, delta) => {
