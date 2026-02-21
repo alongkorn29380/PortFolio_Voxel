@@ -34,7 +34,7 @@ export default function Bushes({ data = [], colors, uEmission = 0, ...props })
     const materialRef = useRef()
     const { scene } = useThree()
 
-   const { displacementStrength, alphaTest } = useControls('Bushes', 
+    const { displacementStrength, alphaTest } = useControls('Bushes', 
         {
             displacementStrength:
             {
@@ -63,7 +63,7 @@ export default function Bushes({ data = [], colors, uEmission = 0, ...props })
     const bushesGeometry = useMemo(() => 
     {
         const planes = []
-        const size = 1.5
+        const size = 2.5
         const resolution = 10
         for (let i = 0; i < resolution; i++) 
         {
@@ -106,7 +106,7 @@ export default function Bushes({ data = [], colors, uEmission = 0, ...props })
             const node = data[i]
             dummy.position.copy(node.position)
             dummy.rotation.copy(node.rotation)
-            dummy.scale.copy(node.scale).multiplyScalar(2.0) 
+            dummy.scale.copy(node.scale)
 
             dummy.updateMatrix()
             instancedMeshRef.current.setMatrixAt(i, dummy.matrix)
@@ -114,7 +114,7 @@ export default function Bushes({ data = [], colors, uEmission = 0, ...props })
         instancedMeshRef.current.instanceMatrix.needsUpdate = true
     }, [data, bushesGeometry, dummy])
 
-   useFrame((state, delta) => {
+    useFrame((state, delta) => {
         if (materialRef.current) {
             materialRef.current.uniforms.uDisplacementStrength.value = displacementStrength
             materialRef.current.uniforms.uAlphaTest.value = alphaTest
