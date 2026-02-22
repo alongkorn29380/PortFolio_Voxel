@@ -48,13 +48,13 @@ export default function Experience()
 
     return(
         <>
-            // Efficiency
+            {/* Efficiency */}
             <Perf position="top-left" />
 
-            // Camera controls
+            {/* Camera controls */}
             <OrbitControls makeDefault />
 
-            // Light and time
+            {/* Light and time */}
             <TimeProvider>
             <Light />
 
@@ -71,12 +71,13 @@ export default function Experience()
 
                 </Physics>
 
+               
                 <EffectComposer disableNormalPass>
                     <Bloom 
-                        luminanceThreshold={1.0} 
+                        luminanceThreshold={ 2 } 
                         mipmapBlur 
-                        intensity={1.5} 
-                        radius={0.4}    
+                        intensity={ 1.5 } 
+                        radius={ 0.4 }    
                     />
                 </EffectComposer>
 

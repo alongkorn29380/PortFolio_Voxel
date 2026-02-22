@@ -134,14 +134,14 @@ export default function Bushes({ data = [], colors, uEmission = 0, ...props })
     if (data.length === 0) return null
 
     return (
-        <instancedMesh 
+       <instancedMesh 
             ref={instancedMeshRef} 
-            args={[bushesGeometry, 
-            undefined, data.length]} 
+            args={[bushesGeometry, undefined, data.length]} 
             {...props} 
             receiveShadow 
-            castShadow>
-
+            castShadow
+            frustumCulled={false} 
+        >
             <bushesMaterial 
                 ref={materialRef} 
                 side={THREE.DoubleSide} 

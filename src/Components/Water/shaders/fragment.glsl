@@ -47,9 +47,13 @@ void main() {
         foam = smoothstep(0.0, 1.0, foam);
         foam = pow(foam, 3.0);
     }
+    foam = 0.0; 
+
 
     // Mix color
     vec3 waterColor = mix(uColorDeep, uColorShallow, vUv.y);
+    
+    // เมื่อ foam = 0.0 ตรงนี้ก็จะไม่มีการผสมสีขาว (vec3(1.0)) เข้าไปเลย
     vec3 finalColor = mix(waterColor, vec3(1.0), foam);
 
     // Transparency

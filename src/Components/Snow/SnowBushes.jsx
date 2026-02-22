@@ -6,19 +6,19 @@ import Bushes from '../Bushes/Bushes.jsx'
 export default function ForestBushes({ nodes })
 {
     const data = {
-        blue: 
+        Blue: 
         { 
             top: '#CCFFFF', 
             mid: '#44CCFF', 
             bottom: '#004488' 
         },
-        green:
+        Green:
         { 
             top: '#AAFFFF', 
             mid: '#448888', 
             bottom: '#113333' 
         },
-        white: 
+        White: 
         { 
             top: '#FFFFFF', 
             mid: '#BBDDFF', 
@@ -27,20 +27,22 @@ export default function ForestBushes({ nodes })
     }
 
     const { 
-        blueTop, blueMid, blueBottom,
-        greenTop, greenMid, greenBottom,
-        whiteTop, whiteMid, whiteBottom
+        BlueTop, BlueMid, BlueBottom,
+        GreenTop, GreenMid, GreenBottom,
+        WhiteTop, WhiteMid, WhiteBottom
     } = useControls('Bushes', {
         'Snow Bushes': folder({
-            blueTop: { value: data.blue.top, label: 'Blue Top' },
-            blueMid: { value: data.blue.mid, label: 'Blue Mid' },
-            blueBottom: { value: data.blue.bottom, label: 'Blue Bottom' },
-            greenTop: { value: data.green.top, label: 'Green Top' },
-            greenMid: { value: data.green.mid, label: 'Green Mid' },
-            greenBottom: { value: data.green.bottom, label: 'Green Bottom' },
-            whiteTop: { value: data.white.top, label: 'White Top' },
-            whiteMid: { value: data.white.mid, label: 'White Mid' },
-            whiteBottom: { value: data.white.bottom, label: 'White Bottom' },
+            BlueTop: { value: data.Blue.top, label: 'Blue Top' },
+            BlueMid: { value: data.Blue.mid, label: 'Blue Mid' },
+            BlueBottom: { value: data.Blue.bottom, label: 'Blue Bottom' },
+
+            GreenTop: { value: data.Green.top, label: 'Green Top' },
+            GreenMid: { value: data.Green.mid, label: 'Green Mid' },
+            GreenBottom: { value: data.Green.bottom, label: 'Green Bottom' },
+            
+            WhiteTop: { value: data.White.top, label: 'White Top' },
+            WhiteMid: { value: data.White.mid, label: 'White Mid' },
+            WhiteBottom: { value: data.White.bottom, label: 'White Bottom' },
         }, { collapsed: true })
     }, { collapsed: true })
 
@@ -73,21 +75,21 @@ export default function ForestBushes({ nodes })
             {blueBushes.length > 0 && (
                 <Bushes
                     data = { blueBushes }
-                    colors = {{ top: blueTop, mid: blueMid, bottom: blueBottom }}
+                    colors = {{ top: BlueTop, mid: BlueMid, bottom: BlueBottom }}
                 />
             )}
 
             {greenBushes.length > 0 && (
                 <Bushes 
                     data={greenBushes} 
-                    colors={{ top: greenTop, mid: greenMid, bottom: greenBottom }} 
+                    colors={{ top: GreenTop, mid: GreenMid, bottom: GreenBottom }} 
                 />
             )}
 
             {whiteBushes.length > 0 && (
                 <Bushes 
                     data={whiteBushes} 
-                    colors={{ top: whiteTop, mid: whiteMid, bottom: whiteBottom }} 
+                    colors={{ top: WhiteTop, mid: WhiteMid, bottom: WhiteBottom }} 
                 />
             )}
         </>

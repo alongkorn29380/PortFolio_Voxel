@@ -2,43 +2,99 @@ import { useMemo } from "react"
 import { useControls, folder } from "leva" 
 import Trees from '../Trees/Trees.jsx'
 
+function TreeBuilder({ nodes, nameFilter, colors, emission, leafHeight, scaleMultiplier }) 
+{
+
+    const trunks = useMemo(() => {
+        const allNodes = Object.values(nodes)
+        return allNodes.filter((node) => node.name.includes(nameFilter) && node.isMesh)
+    }, [nodes, nameFilter])
+
+    if (trunks.length === 0) return null
+
+    return (
+        <group>
+
+            {trunks.map((node) => (
+                <primitive key={node.uuid} object={node} castShadow receiveShadow />
+            ))}
+
+            <Trees 
+                data={trunks} 
+                colors={colors}
+                uEmission={emission}
+                leafHeight={leafHeight}
+                scaleMultiplier={scaleMultiplier} 
+            />
+        </group>
+    )
+}
+
 export default function RobotTreeBlue({ nodes })
 {
     const data = {
-        blueTree: 
+        Blue: 
         { 
-            top: '#4da6ff', 
-            mid: '#0066cc', 
-            bottom: '#003366' 
-        } 
+            top: '#4da6ff',
+             mid: '#0066cc', 
+             bottom: '#003366' 
+        },
+        Lemon:
+        { 
+            top: '#BBFF00', 
+            mid: '#44AA00', 
+            bottom: '#052205' 
+        },
+        Red:
+        { 
+            top: '#FF0000', 
+            mid: '#880000', 
+            bottom: '#220000' 
+        }
     }
 
-    const { blueTreeTop, blueTreeMid, blueTreeBottom, scaleMultiplier, leafHeight, emission } = useControls('Trees', {
-        'Robot Tree Blue': folder({
-            blueTreeTop: { value: data.blueTree.top, label: 'Blue Top' },
-            blueTreeMid: { value: data.blueTree.mid, label: 'Blue Mid' },
-            blueTreeBottom: { value: data.blueTree.bottom, label: 'Blue Bottom' },
-            scaleMultiplier: { value: 3.0, min: 0.1, max: 5.0, step: 0.05, label: 'Leaf Size' },
-            leafHeight: { value: 1.8, min: -5.0, max: 10.0, step: 0.1, label: 'Leaf Height' },
-            emission: { value: 1.5, min: 0.0, max: 10.0, step: 0.1, label: 'Glow (Emission)' }
+    const { BlueTop, BlueMid, BlueBottom, BlueEmission,
+        LemonTop, LemonMid, LemonBottom, LemonEmission,
+        RedTop, RedMid, RedBottom, RedEmission
+    } = useControls('Trees', {
+        'Robot Tree': folder({
+            BlueTop: { value: data.Blue.top, label: 'Blue Top' },
+            BlueMid: { value: data.Blue.mid, label: 'Blue Mid' },
+            BlueBottom: { value: data.Blue.bottom, label: 'Blue Bottom' },
+            BlueEmission: { value: 1.5, min: 0.0, max: 10.0, step: 0.1 },
+
+            LemonTop: { value: data.Lemon.top, label: 'Lemon Top' },
+            LemonMid: { value: data.Lemon.mid, label: 'Lemon Mid' },
+            LemonBottom: { value: data.Lemon.bottom, label: 'Lemon Bottom' },
+            LemonEmission: { value: 1.5, min: 0.0, max: 10.0, step: 0.1 },
+
+            RedTop: { value: data.Red.top, label: 'Red Top' },
+            RedMid: { value: data.Red.mid, label: 'Red Mid' },
+            RedBottom: { value: data.Red.bottom, label: 'Red Bottom' },
+            RedEmission: { value: 1.5, min: 0.0, max: 10.0, step: 0.1 }
         })
     })
 
-    const treePositions = useMemo(() => {
-        const allNodes = Object.values(nodes)
-        const myTrunks = allNodes.filter((node) => node.name.includes('Tree_Robot_Blue') && node.isMesh)
-        return myTrunks
-    }, [nodes])
-
-    if (treePositions.length === 0) return null
-
     return (
-        <Trees 
-            data={treePositions} 
-            colors={{ top: blueTreeTop, mid: blueTreeMid, bottom: blueTreeBottom }}
-            scaleMultiplier={scaleMultiplier}
-            leafHeight={leafHeight}
-            uEmission={emission} 
-        />
+        <>
+            
+            <TreeBuilder 
+                nodes={nodes} nameFilter="Tree_Robot_Blue" 
+                colors={{ top: BlueTop, mid: BlueMid, bottom: BlueBottom }}
+                emission={BlueEmission} leafHeight={1.8} scaleMultiplier={3} 
+            />
+
+            <TreeBuilder 
+                nodes={nodes} nameFilter="Tree_Robot_Lemon" 
+                colors={{ top: LemonTop, mid: LemonMid, bottom: LemonBottom }}
+                emission={LemonEmission} leafHeight={1.8} scaleMultiplier={3} 
+            />
+
+            <TreeBuilder 
+                nodes={nodes} nameFilter="Tree_Robot_Red" 
+                colors={{ top: RedTop, mid: RedMid, bottom: RedBottom }}
+                emission={RedEmission} leafHeight={1.8} scaleMultiplier={3} 
+            />
+        </>
     )
 }

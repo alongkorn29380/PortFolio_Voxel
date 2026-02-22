@@ -6,7 +6,7 @@ import Bushes from '../Bushes/Bushes.jsx'
 export default function ForestBushes({ nodes })
 {
     const data = {
-        blue: 
+        Blue: 
         { 
             top: '#88CCFF', 
             mid: '#0044FF', 
@@ -27,33 +27,35 @@ export default function ForestBushes({ nodes })
     }
 
     const { 
-        blueTop, blueMid, blueBottom, blueemission,
-        LemonTop, LemonMid, LemonBottom, lemonemission,
-        RedTop, RedMid, RedBottom, redemission
+        BlueTop, BlueMid, BlueBottom, BlueEmission,
+        LemonTop, LemonMid, LemonBottom, LemonEmission,
+        RedTop, RedMid, RedBottom, RedEmission
     } = useControls('Bushes', {
         'Robot Bushes': folder({
-            blueTop: { value: data.blue.top, label: 'Blue Top' },
-            blueMid: { value: data.blue.mid, label: 'Blue Mid' },
-            blueBottom: { value: data.blue.bottom, label: 'Blue Bottom' },
-            blueemission :{
+            BlueTop: { value: data.Blue.top, label: 'Blue Top' },
+            BlueMid: { value: data.Blue.mid, label: 'Blue Mid' },
+            BlueBottom: { value: data.Blue.bottom, label: 'Blue Bottom' },
+            BlueEmission :{
                 value: 1.5, 
                 min: 0.0,
                 max: 10.0,
                 step: 0.1
             },
+
             LemonTop: { value: data.Lemon.top, label: 'Lemon Top' },
             LemonMid: { value: data.Lemon.mid, label: 'Lemon Mid' },
             LemonBottom: { value: data.Lemon.bottom, label: 'Lemon Bottom' },
-            lemonemission :{
+            LemonEmission :{
                 value: 1.5, 
                 min: 0.0,
                 max: 10.0,
                 step: 0.1
             },
+            
             RedTop: { value: data.Red.top, label: 'Red Top' },
             RedMid: { value: data.Red.mid, label: 'Red Mid' },
             RedBottom: { value: data.Red.bottom, label: 'Red Bottom' },
-            redemission :{
+            RedEmission :{
                 value: 1.5, 
                 min: 0.0,
                 max: 10.0,
@@ -64,7 +66,7 @@ export default function ForestBushes({ nodes })
 
     const blueBushes = useMemo(() => 
     {
-         const allNodes = Object.values(nodes)
+        const allNodes = Object.values(nodes)
         const bushes = allNodes.filter((node) => node.name.includes('Bushes_Robot_Blue') && node.isMesh)
         bushes.forEach(bush => bush.visible = false)
         return bushes
@@ -72,7 +74,7 @@ export default function ForestBushes({ nodes })
 
     const lemonBushes = useMemo(() => 
     {
-         const allNodes = Object.values(nodes)
+        const allNodes = Object.values(nodes)
         const bushes = allNodes.filter((node) => node.name.includes('Bushes_Robot_Lemon') && node.isMesh)
         bushes.forEach(bush => bush.visible = false)
         return bushes
@@ -80,7 +82,7 @@ export default function ForestBushes({ nodes })
 
     const redBushes = useMemo(() => 
     {
-         const allNodes = Object.values(nodes)
+        const allNodes = Object.values(nodes)
         const bushes = allNodes.filter((node) => node.name.includes('Bushes_Robot_Red') && node.isMesh)
         bushes.forEach(bush => bush.visible = false)
         return bushes
@@ -91,8 +93,8 @@ export default function ForestBushes({ nodes })
             {blueBushes.length > 0 && (
                 <Bushes
                     data = { blueBushes }
-                    colors = {{ top: blueTop, mid: blueMid, bottom: blueBottom }}
-                    uEmission={ blueemission }
+                    colors = {{ top: BlueTop, mid: BlueMid, bottom: BlueBottom }}
+                    uEmission={ BlueEmission }
                 />
             )}
 
@@ -100,7 +102,7 @@ export default function ForestBushes({ nodes })
                 <Bushes 
                     data={lemonBushes} 
                     colors={{ top: LemonTop, mid: LemonMid, bottom: LemonBottom }} 
-                    uEmission={ lemonemission }
+                    uEmission={ LemonEmission }
                 />
             )}
 
@@ -108,7 +110,7 @@ export default function ForestBushes({ nodes })
                 <Bushes 
                     data={redBushes} 
                     colors={{ top: RedTop, mid: RedMid, bottom: RedBottom }} 
-                    uEmission={ redemission }
+                    uEmission={ RedEmission }
                 />
             )}
         </>

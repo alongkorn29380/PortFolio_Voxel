@@ -6,19 +6,19 @@ import Bushes from '../Bushes/Bushes.jsx'
 export default function ForestBushes({ nodes })
 {
     const data = {
-        green: 
+        Green: 
         { 
             top: '#8ab060', 
             mid: '#5a6e38', 
             bottom: '#425228' 
         },
-        orange:
+        Orange:
         { 
             top: '#ffb366', 
             mid: '#e67300', 
             bottom: '#994d00' 
         },
-        pink: 
+        Pink: 
         { 
             top: '#ff99cc', 
             mid: '#d147a3', 
@@ -27,20 +27,22 @@ export default function ForestBushes({ nodes })
     }
 
     const { 
-        greenTop, greenMid, greenBottom,
-        orangeTop, orangeMid, orangeBottom,
-        pinkTop, pinkMid, pinkBottom
+        GreenTop, GreenMid, GreenBottom,
+        OrangeTop, OrangeMid, OrangeBottom,
+        PinkTop, PinkMid, PinkBottom
     } = useControls('Bushes', {
         'Forest Bushes': folder({
-            greenTop: { value: data.green.top, label: 'Green Top' },
-            greenMid: { value: data.green.mid, label: 'Green Mid' },
-            greenBottom: { value: data.green.bottom, label: 'Green Bottom' },
-            orangeTop: { value: data.orange.top, label: 'Orange Top' },
-            orangeMid: { value: data.orange.mid, label: 'Orange Mid' },
-            orangeBottom: { value: data.orange.bottom, label: 'Orange Bottom' },
-            pinkTop: { value: data.pink.top, label: 'Pink Top' },
-            pinkMid: { value: data.pink.mid, label: 'Pink Mid' },
-            pinkBottom: { value: data.pink.bottom, label: 'Pink Bottom' },
+            GreenTop: { value: data.Green.top, label: 'Green Top' },
+            GreenMid: { value: data.Green.mid, label: 'Green Mid' },
+            GreenBottom: { value: data.Green.bottom, label: 'Green Bottom' },
+
+            OrangeTop: { value: data.Orange.top, label: 'Orange Top' },
+            OrangeMid: { value: data.Orange.mid, label: 'Orange Mid' },
+            OrangeBottom: { value: data.Orange.bottom, label: 'Orange Bottom' },
+            
+            PinkTop: { value: data.Pink.top, label: 'Pink Top' },
+            PinkMid: { value: data.Pink.mid, label: 'Pink Mid' },
+            PinkBottom: { value: data.Pink.bottom, label: 'Pink Bottom' },
         }, { collapsed: true })
     }, { collapsed: true })
 
@@ -73,21 +75,21 @@ export default function ForestBushes({ nodes })
             {greenBushes.length > 0 && (
                 <Bushes
                     data = { greenBushes }
-                    colors = {{ top: greenTop, mid: greenMid, bottom: greenBottom }}
+                    colors = {{ top: GreenTop, mid: GreenMid, bottom: GreenBottom }}
                 />
             )}
 
             {pinkBushes.length > 0 && (
                 <Bushes 
                     data={pinkBushes} 
-                    colors={{ top: pinkTop, mid: pinkMid, bottom: pinkBottom }} 
+                    colors={{ top: PinkTop, mid: PinkMid, bottom: PinkBottom }} 
                 />
             )}
 
             {orangeBushes.length > 0 && (
                 <Bushes 
                     data={orangeBushes} 
-                    colors={{ top: orangeTop, mid: orangeMid, bottom: orangeBottom }} 
+                    colors={{ top: OrangeTop, mid: OrangeMid, bottom: OrangeBottom }} 
                 />
             )}
         </>

@@ -32,8 +32,8 @@ extend({ WaterMaterial })
 export default function Water({ areaSize = 50, level = -0.3 })
 {
     const materialRef = useRef()
-    const {size, camera} = useThree()
-    const depthBuffer = useDepthBuffer({ size: 1024, frames: 1 })
+    const {size, camera, gl} = useThree()
+    const depthBuffer = useDepthBuffer()
 
     // Debug
     const { FoamThreshold, opacity, colorDeep, colorShallow } = useControls('Water', {
@@ -59,7 +59,10 @@ export default function Water({ areaSize = 50, level = -0.3 })
         {
             materialRef.current.uTime += delta
             materialRef.current.uDepthMap = depthBuffer
-            materialRef.current.uResolution.set(size.width, size.height)
+            materialRef.current.uResolution.set(
+                size.width * gl.getPixelRatio(), 
+                size.height * gl.getPixelRatio()
+            )
             materialRef.current.cameraNear = camera.near
             materialRef.current.cameraFar = camera.far
             materialRef.current.uFoamThreshold = FoamThreshold
@@ -85,4 +88,3 @@ export default function Water({ areaSize = 50, level = -0.3 })
         </mesh>
     )
 }
-

@@ -6,19 +6,19 @@ import Bushes from '../Bushes/Bushes.jsx'
 export default function ForestBushes({ nodes })
 {
     const data = {
-        blue: 
+        Blue: 
         { 
             top: '#E0FFFF', 
             mid: '#88CCFF', 
             bottom: '#224466' 
         },
-        green:
+        Green:
         { 
             top: '#00FFCC', 
             mid: '#0088AA', 
             bottom: '#002233' 
         },
-        purple: 
+        Purple: 
         { 
             top: '#AA00FF', 
             mid: '#220044', 
@@ -27,15 +27,15 @@ export default function ForestBushes({ nodes })
     }
 
     const { 
-        blueTop, blueMid, blueBottom, blueemission,
-        greenTop, greenMid, greenBottom, greenemission,
-        purpleTop, purpleMid, purpleBottom, purpleemission
+        BlueTop, BlueMid, BlueBottom, BlueEmission,
+        GreenTop, GreenMid, GreenBottom, GreenEmission,
+        PurpleTop, PurpleMid, PurpleBottom, PurpleEmission
     } = useControls('Bushes', {
         'Magic Bushes': folder({
-            blueTop: { value: data.blue.top, label: 'Blue Top' },
-            blueMid: { value: data.blue.mid, label: 'Blue Mid' },
-            blueBottom: { value: data.blue.bottom, label: 'Blue Bottom' },
-            blueemission:
+            BlueTop: { value: data.Blue.top, label: 'Blue Top' },
+            BlueMid: { value: data.Blue.mid, label: 'Blue Mid' },
+            BlueBottom: { value: data.Blue.bottom, label: 'Blue Bottom' },
+            BlueEmission:
             {
                 value: 1.5,
                 min: 0.0,
@@ -43,10 +43,10 @@ export default function ForestBushes({ nodes })
                 step: 0.1
             },
 
-            greenTop: { value: data.green.top, label: 'Green Top' },
-            greenMid: { value: data.green.mid, label: 'Green Mid' },
-            greenBottom: { value: data.green.bottom, label: 'Green Bottom' },
-            greenemission:
+            GreenTop: { value: data.Green.top, label: 'Green Top' },
+            GreenMid: { value: data.Green.mid, label: 'Green Mid' },
+            GreenBottom: { value: data.Green.bottom, label: 'Green Bottom' },
+            GreenEmission:
             {
                 value: 1.5,
                 min: 0.0,
@@ -54,10 +54,10 @@ export default function ForestBushes({ nodes })
                 step: 0.1
             },
 
-            purpleTop: { value: data.purple.top, label: 'Purple Top' },
-            purpleMid: { value: data.purple.mid, label: 'Purple Mid' },
-            purpleBottom: { value: data.purple.bottom, label: 'Purple Bottom' },
-            purpleemission:
+            PurpleTop: { value: data.Purple.top, label: 'Purple Top' },
+            PurpleMid: { value: data.Purple.mid, label: 'Purple Mid' },
+            PurpleBottom: { value: data.Purple.bottom, label: 'Purple Bottom' },
+            PurpleEmission:
             {
                 value: 1.5,
                 min: 0.0,
@@ -96,24 +96,24 @@ export default function ForestBushes({ nodes })
             {blueBushes.length > 0 && (
                 <Bushes
                     data = { blueBushes }
-                    colors = {{ top: blueTop, mid: blueMid, bottom: blueBottom }}
-                    uEmission={ blueemission }
+                    colors = {{ top: BlueTop, mid: BlueMid, bottom: BlueBottom }}
+                    uEmission={ BlueEmission }
                 />
             )}
 
             {greenBushes.length > 0 && (
                 <Bushes 
                     data={greenBushes} 
-                    colors={{ top: greenTop, mid: greenMid, bottom: greenBottom }} 
-                    uEmission={ greenemission }
+                    colors={{ top: GreenTop, mid: GreenMid, bottom: GreenBottom }} 
+                    uEmission={ GreenEmission }
                 />
             )}
 
             {purpleBushes.length > 0 && (
                 <Bushes 
                     data={purpleBushes} 
-                    colors={{ top: purpleTop, mid: purpleMid, bottom: purpleBottom }}
-                    uEmission={ purpleemission } 
+                    colors={{ top: PurpleTop, mid: PurpleMid, bottom: PurpleBottom }}
+                    uEmission={ PurpleEmission } 
                 />
             )}
         </>
