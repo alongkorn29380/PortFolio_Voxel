@@ -41,8 +41,8 @@ export default function ForestBushes({ nodes })
             whiteTop: { value: data.white.top, label: 'White Top' },
             whiteMid: { value: data.white.mid, label: 'White Mid' },
             whiteBottom: { value: data.white.bottom, label: 'White Bottom' },
-        })
-    })
+        }, { collapsed: true })
+    }, { collapsed: true })
 
     const blueBushes = useMemo(() => 
     {

@@ -51,10 +51,8 @@ export default function Bushes({ data = [], colors, uEmission = 0, ...props })
                 max: 1.00,
                 step: 0.01,
                 order: -1
-            }
-        },
-        { collapsed: true }
-    )
+            }, 
+        }, { collapsed: true })
 
     const texture = useTexture('/Textures/Bushes/Bushes_texture.png')
     texture.colorSpace = THREE.SRGBColorSpace

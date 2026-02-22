@@ -41,8 +41,8 @@ export default function ForestBushes({ nodes })
             pinkTop: { value: data.pink.top, label: 'Pink Top' },
             pinkMid: { value: data.pink.mid, label: 'Pink Mid' },
             pinkBottom: { value: data.pink.bottom, label: 'Pink Bottom' },
-        })
-    })
+        }, { collapsed: true })
+    }, { collapsed: true })
 
     const greenBushes = useMemo(() => 
     {

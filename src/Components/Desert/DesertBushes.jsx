@@ -1,4 +1,4 @@
-import { use, useMemo } from 'react'
+import { useMemo } from 'react'
 import { useControls, folder } from 'leva'
 
 import Bushes from '../Bushes/Bushes.jsx'
@@ -41,8 +41,8 @@ export default function DesertBushes({ nodes })
             yellowTop: { value: data.Yellow.top, label: 'Yellow Top' },
             yellowMid: { value: data.Yellow.mid, label: 'Yellow Mid' },
             yellowBottom: { value: data.Yellow.bottom, label: 'Yellow Bottom' },
-        })
-    })
+        }, { collapsed: true })
+    }, { collapsed: true })
 
     const brownBushes = useMemo(() => 
     {
