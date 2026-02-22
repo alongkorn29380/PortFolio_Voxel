@@ -25,9 +25,9 @@ export default function RobotTreeBlue({ nodes })
     })
 
     const treePositions = useMemo(() => {
-        const group = nodes.Tree_Robot_Blue 
-        if (!group) return []
-        return group.children && group.children.length > 0 ? group.children : [group]
+        const allNodes = Object.values(nodes)
+        const myTrunks = allNodes.filter((node) => node.name.includes('Tree_Robot_Blue') && node.isMesh)
+        return myTrunks
     }, [nodes])
 
     if (treePositions.length === 0) return null

@@ -46,26 +46,26 @@ export default function ForestBushes({ nodes })
 
     const blueBushes = useMemo(() => 
     {
-        const group = nodes.Bushes_Snow_Blue
-        if (!group) return []
-        group.visible = false
-        return group.children.length > 0 ? group.children : [group]
+        const allNodes = Object.values(nodes)
+        const bushes = allNodes.filter((node) => node.name.includes('Bushes_Snow_Blue') && node.isMesh)
+        bushes.forEach(bush => bush.visible = false)
+        return bushes
     }, [nodes])
 
     const greenBushes = useMemo(() => 
     {
-        const group = nodes.Bushes_Snow_Green
-        if (!group) return []
-        group.visible = false
-        return group.children.length > 0 ? group.children : [group]
+        const allNodes = Object.values(nodes)
+        const bushes = allNodes.filter((node) => node.name.includes('Bushes_Snow_Green') && node.isMesh)
+        bushes.forEach(bush => bush.visible = false)
+        return bushes
     }, [nodes])
 
     const whiteBushes = useMemo(() => 
     {
-        const group = nodes.Bushes_Snow_White
-        if (!group) return []
-        group.visible = false
-        return group.children.length > 0 ? group.children : [group]
+        const allNodes = Object.values(nodes)
+        const bushes = allNodes.filter((node) => node.name.includes('Bushes_Snow_White') && node.isMesh)
+        bushes.forEach(bush => bush.visible = false)
+        return bushes
     }, [nodes])
 
     return (

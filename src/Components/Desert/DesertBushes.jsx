@@ -46,26 +46,26 @@ export default function DesertBushes({ nodes })
 
     const brownBushes = useMemo(() => 
     {
-        const group = nodes.Bushes_Desert_Brown
-        if (!group) return []
-        group.visible = false
-        return group.children.length > 0 ? group.children : [group]
+        const allNodes = Object.values(nodes)
+        const bushes = allNodes.filter((node) => node.name.includes('Bushes_Desert_Brown') && node.isMesh)
+        bushes.forEach(bush => bush.visible = false)
+        return bushes
     }, [nodes])
 
     const goldBushes = useMemo(() => 
     {
-        const group = nodes.Bushes_Desert_Gold
-        if (!group) return []
-        group.visible = false
-        return group.children.length > 0 ? group.children : [group]
+        const allNodes = Object.values(nodes)
+        const bushes = allNodes.filter((node) => node.name.includes('Bushes_Desert_Gold') && node.isMesh)
+        bushes.forEach(bush => bush.visible = false)
+        return bushes
     }, [nodes])
 
     const YellowBushes = useMemo(() => 
     {
-        const group = nodes.Bushes_Desert_Yellow
-        if (!group) return []
-        group.visible = false
-        return group.children.length > 0 ? group.children : [group]
+        const allNodes = Object.values(nodes)
+        const bushes = allNodes.filter((node) => node.name.includes('Bushes_Desert_Yellow') && node.isMesh)
+        bushes.forEach(bush => bush.visible = false)
+        return bushes
     }, [nodes])
 
     return (
