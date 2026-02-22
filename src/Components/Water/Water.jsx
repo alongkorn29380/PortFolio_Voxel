@@ -1,6 +1,6 @@
-import { shaderMaterial, useDepthBuffer } from '@react-three/drei'
+import { shaderMaterial } from '@react-three/drei'
 import { useRef } from 'react'
-import { extend, useFrame, useThree } from '@react-three/fiber'
+import { extend, useFrame } from '@react-three/fiber'
 import { useControls } from 'leva'
 import * as THREE from 'three'
 
@@ -15,11 +15,6 @@ const ColorWater = {
 const WaterMaterial = shaderMaterial(
     {
         uTime: 0,
-        uDepthMap: null,
-        uResolution: new THREE.Vector2(),
-        cameraNear: 0,
-        cameraFar: 0,
-        uFoamThreshold: 1.0,
         uColorDeep : new THREE.Color(ColorWater.deep),
         uColorShallow : new THREE.Color(ColorWater.shallow),
         uOpacity: 0.6
@@ -32,19 +27,10 @@ extend({ WaterMaterial })
 export default function Water({ areaSize = 50, level = -0.3 })
 {
     const materialRef = useRef()
-    const {size, camera, gl} = useThree()
-    const depthBuffer = useDepthBuffer()
 
-    // Debug
-    const { FoamThreshold, opacity, colorDeep, colorShallow } = useControls('Water', {
-        FoamThreshold:{
-            value: 1.0,
-            min: 0.0,
-            max: 5.0,
-            step:0.1
-        },
+    const { opacity, colorDeep, colorShallow } = useControls('Water', {
         opacity: {
-            value:0.5,
+            value: 0.6,
             min: 0.0,
             max: 1.0,
             step: 0.01
@@ -53,19 +39,10 @@ export default function Water({ areaSize = 50, level = -0.3 })
         colorShallow: ColorWater.shallow,
     }, { collapsed: true } )
 
-
     useFrame((state, delta) => {
         if (materialRef.current)
         {
             materialRef.current.uTime += delta
-            materialRef.current.uDepthMap = depthBuffer
-            materialRef.current.uResolution.set(
-                size.width * gl.getPixelRatio(), 
-                size.height * gl.getPixelRatio()
-            )
-            materialRef.current.cameraNear = camera.near
-            materialRef.current.cameraFar = camera.far
-            materialRef.current.uFoamThreshold = FoamThreshold
             materialRef.current.uColorDeep.set(colorDeep)
             materialRef.current.uColorShallow.set(colorShallow)
             materialRef.current.uOpacity = opacity

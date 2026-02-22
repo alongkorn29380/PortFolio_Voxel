@@ -10,7 +10,11 @@ import MagicBushes from '../Magic/MagicBushes.jsx'
 import SnowBushes from '../Snow/SnowBushes.jsx'
 import RobotBushes from '../Robot/RobotBushes.jsx'
 
-import RobotTree from "../Robot/RobotTree.jsx"
+import ForestTree from '../Forest/ForestTrees.jsx'
+import DesertTree from '../Desert/DesertTrees.jsx'
+import MagicTree from '../Magic/MagicTrees.jsx'
+import SnowTree from '../Snow/SnowTrees.jsx'
+import RobotTree from '../Robot/RobotTrees.jsx'
 
 export default function Terrain()
 {
@@ -26,7 +30,7 @@ export default function Terrain()
 
                 if (
                     child.name.includes('Bushes') || 
-                    (child.name.includes('Tree') && !child.name.includes('Tree_Robot_Blue'))
+                    (child.name.includes('Tree') && !child.name.includes('Tree_Robot_Blue') && !child.name.includes('Tree_Desert'))
                 ) {
                     child.visible = false
                 }
@@ -53,6 +57,10 @@ export default function Terrain()
         <SnowBushes nodes = { nodes} />
         <RobotBushes nodes = { nodes} />
 
+        <ForestTree nodes = { nodes } />
+        <DesertTree nodes = { nodes } />
+        <MagicTree nodes = { nodes } />
+        <SnowTree nodes = { nodes } />
         <RobotTree nodes = { nodes } />
         </>
     )
