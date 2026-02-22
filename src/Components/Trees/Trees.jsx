@@ -11,9 +11,9 @@ export default function Trees({ data = [], colors, scaleMultiplier = 0.5, leafHe
             const s = node.scale.x * scaleMultiplier
 
             leaves.push({ position: new THREE.Vector3(basePos.x, basePos.y + leafHeight, basePos.z), rotation: node.rotation, scale: new THREE.Vector3(s, s * 0.5, s) })
-            leaves.push({ position: new THREE.Vector3(basePos.x, basePos.y + leafHeight + (0.8 * s), basePos.z), rotation: node.rotation, scale: new THREE.Vector3(s * 0.8, s * 0.45, s * 0.8) })
-            leaves.push({ position: new THREE.Vector3(basePos.x, basePos.y + leafHeight + (1.5 * s), basePos.z), rotation: node.rotation, scale: new THREE.Vector3(s * 0.55, s * 0.35, s * 0.55) })
-            leaves.push({ position: new THREE.Vector3(basePos.x, basePos.y + leafHeight + (2.1 * s), basePos.z), rotation: node.rotation, scale: new THREE.Vector3(s * 0.3, s * 0.25, s * 0.3) })
+            leaves.push({ position: new THREE.Vector3(basePos.x, basePos.y + leafHeight + (1 * s), basePos.z), rotation: node.rotation, scale: new THREE.Vector3(s * 0.8, s * 0.45, s * 0.8) })
+            leaves.push({ position: new THREE.Vector3(basePos.x, basePos.y + leafHeight + (2 * s), basePos.z), rotation: node.rotation, scale: new THREE.Vector3(s * 0.55, s * 0.35, s * 0.55) })
+            leaves.push({ position: new THREE.Vector3(basePos.x, basePos.y + leafHeight + (2.75 * s), basePos.z), rotation: node.rotation, scale: new THREE.Vector3(s * 0.3, s * 0.25, s * 0.3) })
         })
         return leaves
     }, [data, scaleMultiplier, leafHeight])

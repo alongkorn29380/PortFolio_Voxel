@@ -18,8 +18,8 @@ export default function RobotTreeBlue({ nodes })
             blueTreeTop: { value: data.blueTree.top, label: 'Blue Top' },
             blueTreeMid: { value: data.blueTree.mid, label: 'Blue Mid' },
             blueTreeBottom: { value: data.blueTree.bottom, label: 'Blue Bottom' },
-            scaleMultiplier: { value: 0.5, min: 0.1, max: 3.0, step: 0.05, label: 'Leaf Size' },
-            leafHeight: { value: 1.5, min: -5.0, max: 10.0, step: 0.1, label: 'Leaf Height' },
+            scaleMultiplier: { value: 3.0, min: 0.1, max: 5.0, step: 0.05, label: 'Leaf Size' },
+            leafHeight: { value: 1.8, min: -5.0, max: 10.0, step: 0.1, label: 'Leaf Height' },
             emission: { value: 1.5, min: 0.0, max: 10.0, step: 0.1, label: 'Glow (Emission)' }
         })
     })
