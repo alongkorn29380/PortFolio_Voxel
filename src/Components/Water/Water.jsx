@@ -24,7 +24,7 @@ const WaterMaterial = shaderMaterial(
 )
 extend({ WaterMaterial })
 
-export default function Water({ areaSize = 50, level = -0.3 })
+export default function Water({ areaSize = 50, level = - 0.3 })
 {
     const materialRef = useRef()
 

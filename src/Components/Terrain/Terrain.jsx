@@ -49,7 +49,7 @@ export default function Terrain()
             <primitive object={ scene } />
         </RigidBody>
 
-        <Water areaSize = { 100 } level = { - 0.2 } />
+        <Water areaSize = { 94.7 } level = { - 0.1 } />
 
         <ForestBushes nodes = { nodes} />
         <DesertBushes nodes = { nodes} />
