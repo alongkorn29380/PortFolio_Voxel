@@ -4,23 +4,15 @@ import { useEffect } from "react"
 
 import Water from '../Water/Water.jsx'
 
-import ForestBushes from '../Forest/ForestBushes.jsx'
-import DesertBushes from '../Desert/DesertBushes.jsx'
-import MagicBushes from '../Magic/MagicBushes.jsx'
-import SnowBushes from '../Snow/SnowBushes.jsx'
-import RobotBushes from '../Robot/RobotBushes.jsx'
-
-import ForestTree from '../Forest/ForestTrees.jsx'
-import DesertTree from '../Desert/DesertTrees.jsx'
-import MagicTree from '../Magic/MagicTrees.jsx'
-import SnowTree from '../Snow/SnowTrees.jsx'
-import RobotTree from '../Robot/RobotTrees.jsx'
+import Forest from '../Forest/Forest.jsx'
+import Desert from '../Desert/Desert.jsx'
+import Magic from '../Magic/Magic.jsx'
+import Robot from '../Robot/Robot.jsx'
+import Snow from '../Snow/Snow.jsx'
 
 export default function Terrain()
 {
     const { scene, nodes } = useGLTF('/Models/Terrain/Terrain.glb')
-
-    // console.log(scene, nodes)
 
     useEffect(() => {
         scene.traverse((child) => {
@@ -40,28 +32,23 @@ export default function Terrain()
 
     return (
         <>
-        <RigidBody
-            type = 'fixed'
-            colliders = "trimesh"
-            restitution = { 0.2 }
-            friction = { 0 }
-        >
-            <primitive object={ scene } />
-        </RigidBody>
+            <RigidBody
+                type='fixed'
+                colliders="trimesh"
+                restitution={ 0.2 }
+                friction={ 0 }
+            >
+                <primitive object={ scene } />
+            </RigidBody>
 
-        <Water areaSize = { 94.7 } level = { - 0.1 } />
+            <Water areaSize={ 94.7 } level={ -0.1 } />
 
-        <ForestBushes nodes = { nodes} />
-        <DesertBushes nodes = { nodes} />
-        <MagicBushes nodes = { nodes} />
-        <SnowBushes nodes = { nodes} />
-        <RobotBushes nodes = { nodes} />
+            <Forest nodes={ nodes } />
+            <Desert nodes={ nodes } />
+            <Magic nodes={ nodes } />
+            <Robot nodes={ nodes } />
+            <Snow nodes={ nodes } />
 
-        <ForestTree nodes = { nodes } />
-        <DesertTree nodes = { nodes } />
-        <MagicTree nodes = { nodes } />
-        <SnowTree nodes = { nodes } />
-        <RobotTree nodes = { nodes } />
         </>
     )
 }
