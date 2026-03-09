@@ -14,6 +14,8 @@ export default function Terrain()
 {
     const { scene, nodes } = useGLTF('/Models/Terrain/Terrain.glb')
 
+    // console.log(scene, nodes)
+
     useEffect(() => {
         scene.traverse((child) => {
             if (child.isMesh) {
