@@ -1,18 +1,37 @@
 import { useFrame } from "@react-three/fiber";
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import * as THREE from "three";
+import { RigidBody } from "@react-three/rapier"; 
 
 export default function Windmill_House({ nodes })
 {
-    const turbineRef = useRef()
+    const rbRef = useRef()
+    
+    const [euler] = useState(() => new THREE.Euler().copy(nodes.Turbine.rotation))
+
     useFrame((state, delta) => 
     {
-        turbineRef.current.rotation.y += delta * 1
+        if (rbRef.current) {
+            euler.y += delta * 1
+    
+            const quaternion = new THREE.Quaternion().setFromEuler(euler)
+            rbRef.current.setNextKinematicRotation(quaternion)
+        }
     })
 
     return (
-        <primitive 
-            ref={ turbineRef } 
-            object={ nodes.Turbine } 
-        />
+
+        <RigidBody 
+            ref={rbRef} 
+            type="kinematicPosition" 
+            colliders="trimesh" 
+            position={nodes.Turbine.position}
+        >
+            <primitive 
+                object={ nodes.Turbine } 
+                position={[0, 0, 0]} 
+                rotation={[0, 0, 0]} 
+            />
+        </RigidBody>
     )
 }

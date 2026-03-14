@@ -89,8 +89,8 @@ export default function Player({cameraActive, ...props}) {
         })
 
        // Ground Detection
-        const colliderCenterY = 2.0
-        const colliderHalfHeight = 2.0
+        const colliderCenterY = 0.8     
+        const colliderHalfHeight = 0.75
 
         const rapierWorld = rapier.world;
         const bodyOrigin = body.current.translation(); 
@@ -99,6 +99,7 @@ export default function Player({cameraActive, ...props}) {
             y: bodyOrigin.y + colliderCenterY, 
             z: bodyOrigin.z 
         };
+        
         const dir = { x: 0, y: -1, z: 0 };
         const ray = new rapier.rapier.Ray(rayStartPoint, dir);
         const rayLength = colliderHalfHeight + 0.1; 
@@ -112,22 +113,18 @@ export default function Player({cameraActive, ...props}) {
         const isMoving = forward || backward || leftward || rightward
 
         // Physics
-        const WALK_SPEED = 2
+       const WALK_SPEED = 2
         const RUN_SPEED = 3.5
         const SPEED = sprint ? RUN_SPEED : WALK_SPEED;
         const vel = body.current.linvel(); 
 
         const targetVel = new THREE.Vector3()
-            if (forward) targetVel.z -= SPEED
-            if (backward) targetVel.z += SPEED
-            if (leftward) targetVel.x -= SPEED
-            if (rightward) targetVel.x += SPEED
-        
-        const impulse = new THREE.Vector3()
-            impulse.x = targetVel.x - vel.x
-            impulse.z = targetVel.z - vel.z
+        if (forward) targetVel.z -= SPEED
+        if (backward) targetVel.z += SPEED
+        if (leftward) targetVel.x -= SPEED
+        if (rightward) targetVel.x += SPEED
 
-        body.current.applyImpulse(impulse, true)
+        body.current.setLinvel({ x: targetVel.x, y: vel.y, z: targetVel.z }, true)
 
         // Animation State Managment
         const idleActionName = "Standing"
@@ -206,7 +203,7 @@ export default function Player({cameraActive, ...props}) {
             castShadow
             friction={0} 
         >
-            <CapsuleCollider args={[0.9, 0.5]} position={[0, 1.5, 0]} />
+            <CapsuleCollider args={[0.3, 0.45]} position={[0.02, 0.85, 0]} />
             
             <group ref={modelRef} scale={0.1} position={[0, 0.1, 0]}>
                 <primitive object={scene} />
