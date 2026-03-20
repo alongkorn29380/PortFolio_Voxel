@@ -25,6 +25,7 @@ export default function Lamp({ nodes }) {
 function SingleLamp({ node, timeRef }) {
     const materialRef = useRef()
     const sparklesRef = useRef()
+    const lightRef = useRef() 
 
     useFrame((state, delta) => {
         if (!materialRef.current) return
@@ -32,12 +33,21 @@ function SingleLamp({ node, timeRef }) {
         const time = timeRef.current || 0
         const isNight = time > 0.70 || time < 0.30
 
-        const targetIntensity = isNight ? 5 : 0
+        const targetEmissive = isNight ? 5 : 0
         materialRef.current.emissiveIntensity = THREE.MathUtils.lerp(
             materialRef.current.emissiveIntensity,
-            targetIntensity,
+            targetEmissive,
             delta * 5
         )
+
+        if (lightRef.current) {
+            const targetLightIntensity = isNight ? 4 : 0 
+            lightRef.current.intensity = THREE.MathUtils.lerp(
+                lightRef.current.intensity,
+                targetLightIntensity,
+                delta * 5
+            )
+        }   
 
         if (sparklesRef.current) {
             sparklesRef.current.visible = isNight
@@ -60,6 +70,15 @@ function SingleLamp({ node, timeRef }) {
                     toneMapped={false} 
                 />
             </mesh>
+
+            <pointLight 
+                ref={lightRef}
+                position={[0, 3.5, 0]} 
+                color="#e4af02" 
+                distance={30} 
+                decay={1} 
+                intensity={0} 
+            />
 
             <Sparkles 
                 ref={sparklesRef}
