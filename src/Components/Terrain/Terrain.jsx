@@ -2,13 +2,14 @@ import { useGLTF } from "@react-three/drei"
 import { RigidBody } from '@react-three/rapier'
 import { useEffect } from "react"
 
-import Water from '../Water/Water.jsx'
-
 import Forest from '../Forest/Forest.jsx'
 import Desert from '../Desert/Desert.jsx'
 import Magic from '../Magic/Magic.jsx'
 import Robot from '../Robot/Robot.jsx'
 import Snow from '../Snow/Snow.jsx'
+import Water from '../Water/Water.jsx'
+
+import Bridge from '../Bridge/Bridge.jsx'
 
 export default function Terrain()
 {
@@ -43,13 +44,14 @@ export default function Terrain()
                 <primitive object={ scene } />
             </RigidBody>
 
-            <Water areaSize={ 94.7 } level={ -0.1 } />
-
             <Forest nodes={ nodes } />
             <Desert nodes={ nodes } />
             <Magic nodes={ nodes } />
             <Robot nodes={ nodes } />
             <Snow nodes={ nodes } />
+            <Water areaSize={ 94.7 } level={ -0.1 } />
+
+            <Bridge nodes={ nodes } />
 
         </>
     )

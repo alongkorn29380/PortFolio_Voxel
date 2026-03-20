@@ -4,7 +4,8 @@ import { Sparkles } from '@react-three/drei'
 import * as THREE from 'three'
 import { useTime } from '../Context/TimeContext.jsx'
 
-export default function Lamp({ nodes }) {
+export default function Lamp({ nodes }) 
+{
     const { timeRef } = useTime()
     
     const lampNodes = useMemo(() => {
@@ -22,12 +23,14 @@ export default function Lamp({ nodes }) {
     )
 }
 
-function SingleLamp({ node, timeRef }) {
+function SingleLamp({ node, timeRef }) 
+{
     const materialRef = useRef()
     const sparklesRef = useRef()
     const lightRef = useRef() 
 
-    useFrame((state, delta) => {
+    useFrame((state, delta) => 
+    {
         if (!materialRef.current) return
 
         const time = timeRef.current || 0
@@ -41,7 +44,7 @@ function SingleLamp({ node, timeRef }) {
         )
 
         if (lightRef.current) {
-            const targetLightIntensity = isNight ? 4 : 0 
+            const targetLightIntensity = isNight ? 1 : 0 
             lightRef.current.intensity = THREE.MathUtils.lerp(
                 lightRef.current.intensity,
                 targetLightIntensity,
