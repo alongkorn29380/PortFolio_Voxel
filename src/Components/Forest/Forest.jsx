@@ -2,7 +2,8 @@ import ForestBushes from './ForestBushes.jsx'
 import ForestTrees from './ForestTrees.jsx'
 import Windmill_House from './Windmill_House.jsx'
 import Garden from './Garden/Garden.jsx'
-import Lamp from './Lamp.jsx'           
+import Lamp from './Lamp.jsx'    
+import Fire from './Fire.jsx'       
 
 export default function Forest({ nodes })
 {
@@ -13,6 +14,7 @@ export default function Forest({ nodes })
             <Windmill_House nodes={ nodes } />
             <Garden nodes={ nodes } />
             <Lamp nodes={ nodes } />
+            <Fire nodes={ nodes } />
         </>
     )
 }
