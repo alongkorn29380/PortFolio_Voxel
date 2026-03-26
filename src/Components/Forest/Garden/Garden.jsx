@@ -10,8 +10,8 @@ import gardenFragmentShader from './shaders/fragment.glsl'
 const GardenMaterial = shaderMaterial(
     {
         uTime: 0,
-        uWindStrength: 0.1,
-        uWindSpeed: 1.5,
+        uWindStrength: 0.4,
+        uWindSpeed: 2.5,
         uTexture: null,
         uUseTexture: false,
         uAlphaTest: 0.5,
@@ -83,14 +83,14 @@ export default function Garden({ nodes }) {
         'Wind': folder({
             windStrength: 
             { 
-                value: 0.15, 
+                value: 0.4, 
                 min: 0, 
                 max: 0.5, 
                 step: 0.01 
             },
             windSpeed: 
             { 
-                value: 1.5, 
+                value: 2.5, 
                 min: 0, 
                 max: 5.0, 
                 step: 0.1 

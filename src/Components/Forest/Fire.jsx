@@ -2,23 +2,42 @@ import * as THREE from 'three'
 import { useRef, useMemo, useEffect } from 'react'
 import { useFrame } from '@react-three/fiber'
 
-// พาเลทสีของไฟไล่ระดับจากร้อนไปเย็น (ขาว -> เหลือง -> ส้ม -> แดง -> ควันดำ)
 const FIRE_COLORS = [
     new THREE.Color('#ffffff'), 
     new THREE.Color('#ffdd00'), 
     new THREE.Color('#ff5500'), 
-    new THREE.Color('#cc0000'), 
-    new THREE.Color('#111111'), 
+    new THREE.Color('#ff0000'), 
+    new THREE.Color('#222222'), 
 ]
+
+export default function Fire({ nodes }) {
+    const fireSpawns = useMemo(() => {
+        return Object.values(nodes).filter((node) => 
+            node.type === "Mesh" && (node.name.startsWith("Fire") || node.name.startsWith("Spawn_Fire"))
+        )
+    }, [nodes])
+
+    useEffect(() => {
+        fireSpawns.forEach((node) => {
+            node.visible = false
+        })
+    }, [fireSpawns])
+
+    return (
+        <>
+            {fireSpawns.map((node) => (
+                <SingleFire key={node.uuid} node={node} count={50} />
+            ))}
+        </>
+    )
+}
 
 function SingleFire({ node, count = 50 }) {
     const meshRef = useRef()
     
-    // 💡 ปรับแต่งรูปร่างของกองไฟตรงนี้ได้เลย!
-    const FIRE_WIDTH = 2;      
-    const FIRE_HEIGHT = 2;     
-    const FIRE_TAPER = 0.97;     
-
+    const FIRE_WIDTH = 1.2;
+    const FIRE_HEIGHT = 2.0;
+    
     const particles = useMemo(() => {
         const temp = []
         for (let i = 0; i < count; i++) {
@@ -52,13 +71,13 @@ function SingleFire({ node, count = 50 }) {
             }
 
             particle.y += delta * particle.speed * FIRE_HEIGHT
-            particle.x *= FIRE_TAPER 
-            particle.z *= FIRE_TAPER
+            particle.x *= 0.98 
+            particle.z *= 0.98
 
             dummy.position.set(particle.x, particle.y, particle.z)
             dummy.rotation.x += particle.rotSpeed * delta
             dummy.rotation.y += particle.rotSpeed * delta
-            
+
             const currentScale = particle.scale * (0.4 + particle.life * 0.6)
             dummy.scale.set(currentScale, currentScale, currentScale)
             
@@ -82,6 +101,7 @@ function SingleFire({ node, count = 50 }) {
 
     return (
         <group position={node.position}>
+            
             <pointLight 
                 color="#ff8800" 
                 distance={15} 

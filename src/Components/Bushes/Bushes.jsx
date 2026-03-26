@@ -11,7 +11,7 @@ import bushesFragmentShader from './shaders/fragment.glsl'
 const BushesMaterial = shaderMaterial(
     {
         uTime: 0,
-        uDisplacementStrength: 0.15,
+        uDisplacementStrength: 1.0,
         uAlphaTest: 0.5,
         uColorTop: new THREE.Color('#ffffff'),
         uColorMid: new THREE.Color('#ffffff'),
@@ -38,7 +38,7 @@ export default function Bushes({ data = [], colors, uEmission = 0, ...props })
         {
             displacementStrength:
             {
-                value: 0.15,
+                value: 1.0,
                 min: 0.00,
                 max: 1.00,
                 step: 0.01,

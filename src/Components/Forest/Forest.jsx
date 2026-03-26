@@ -3,7 +3,7 @@ import ForestTrees from './ForestTrees.jsx'
 import Windmill_House from './Windmill_House.jsx'
 import Garden from './Garden/Garden.jsx'
 import Lamp from './Lamp.jsx'    
-import Fire from './Fire.jsx'       
+import Fire from './Fire.jsx'      
 
 export default function Forest({ nodes })
 {

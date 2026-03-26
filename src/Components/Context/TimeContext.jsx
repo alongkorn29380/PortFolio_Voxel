@@ -13,7 +13,6 @@ export default function TimeProvider({ children })
             max: 1.000,
             step: 0.001
         },
-        
         speed: {
             value: 0.050,
             min: 0.000,
@@ -23,7 +22,6 @@ export default function TimeProvider({ children })
         auto: {
             value: true
         },
-
         'Day': button(() => set({ progress: 0.5 })),
         'Dusk': button(() => set({ progress: 0.75 })),
         'Night': button(() => set({ progress: 0.00})),
@@ -31,26 +29,32 @@ export default function TimeProvider({ children })
     }), { collapsed: true })
 
     const timeRef = useRef(progress)
-    
-    useEffect(() => { timeRef.current = progress}, [progress])
+    const uiTimerRef = useRef(0) 
 
-    // Loop Time
+    useEffect(() => { 
+        timeRef.current = progress 
+    }, [progress])
+
     useFrame((state, delta) => {
         if(auto) {
             timeRef.current += delta * speed * 0.1
             if(timeRef.current > 1) timeRef.current = 0
-            set({ progress: timeRef.current })
+            
+            uiTimerRef.current += delta
+            if (uiTimerRef.current > 0.5) {
+                set({ progress: parseFloat(timeRef.current.toFixed(3)) }) 
+                uiTimerRef.current = 0 
+            }
         }
     })
 
     return(
         <TimeContext.Provider value={{ timeRef }} >
-            { children}
+            {children}
         </TimeContext.Provider>
     )
 }
 
-// Hook
 export const useTime = () => {
     const context = useContext(TimeContext)
     if (!context) {
