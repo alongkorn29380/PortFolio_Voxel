@@ -6,7 +6,7 @@ import Lamp from './Lamp.jsx'
 import Fire from './Fire.jsx'      
 import Animals from './Animals.jsx'
 
-export default function Forest({ nodes })
+export default function Forest({ nodes, musicEnabled })
 {
     return (
         <>
@@ -16,7 +16,7 @@ export default function Forest({ nodes })
             <Garden nodes={ nodes } />
             <Lamp nodes={ nodes } />
             <Fire nodes={ nodes } />
-            <Animals nodes={ nodes } />
+            <Animals nodes={ nodes } musicEnabled={ musicEnabled } />
         </>
     )
 }

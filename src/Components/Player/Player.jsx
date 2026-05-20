@@ -5,210 +5,154 @@ import { useFrame } from "@react-three/fiber"
 import * as THREE from 'three'
 import { useControls } from 'leva'
 
-export default function Player({cameraActive, ...props}) {
+useGLTF.preload("/Models/Human/Chibi.glb")
 
+// Pre-allocated reusable objects — never created inside useFrame
+const _targetVel      = new THREE.Vector3()
+const _cameraPosition = new THREE.Vector3()
+const _cameraTarget   = new THREE.Vector3()
+const _targetQuat     = new THREE.Quaternion()
+const _rotationAxis   = new THREE.Vector3(0, 1, 0)
+
+export default function Player({ cameraActive, ...props })
+{
     const { scene, animations } = useGLTF("/Models/Human/Chibi.glb")
-    const body = useRef()
-    const modelRef = useRef()
+    const body      = useRef()
+    const modelRef  = useRef()
+    const logoMesh  = useRef(null)
 
-    const [ subscribeKeys, getKeys ] = useKeyboardControls()
+    const [subscribeKeys, getKeys] = useKeyboardControls()
     const rapier = useRapier()
 
     const { actions } = useAnimations(animations, modelRef)
     const animationState = useRef("Standing")
-    const isGrounded = useRef(false)
+    const isGrounded     = useRef(false)
 
-    const [ smoothedCameraPosition] = useState(()=> new THREE.Vector3(10, 10, 10))
-    const [ smoothedCameraTarget ] = useState(() => new THREE.Vector3())
+    const [smoothedCameraPosition] = useState(() => new THREE.Vector3(2, 120, 5))
+    const [smoothedCameraTarget]   = useState(() => new THREE.Vector3(2, 2.25, 5))
+    const introTimer = useRef(0)
 
-    // Debug
     const { logoColor, logoIntensity } = useControls("Logo Glow", {
         logoColor: '#141717',
-        logoIntensity: { 
-            value: 10, 
-            min: 0, 
-            max: 50, 
-            step: 0.5 }
-    },
-        { collapsed: true })
-    
+        logoIntensity: { value: 10, min: 0, max: 50, step: 0.5 }
+    }, { collapsed: true })
+
     const { cameraX, cameraY, cameraZ } = useControls("Camera Model", {
-        cameraX: {
-            value: 7,
-            min: 0,
-            max: 100,
-            step: 1.0,
-        },
+        cameraX: { value: 7, min: 0, max: 100, step: 1.0 },
+        cameraY: { value: 7, min: 0, max: 100, step: 1.0 },
+        cameraZ: { value: 4, min: 0, max: 100, step: 1.0 }
+    }, { collapsed: true })
 
-        cameraY: {
-            value: 7,
-            min: 0,
-            max: 100,
-            step: 1.0,
-        },
-
-        cameraZ: {
-            value: 4,
-            min: 0,
-            max: 100,
-            step: 1.0
-        }
-    }, { collapsed: true})
-
-    
     useEffect(() =>
     {
-        const idleAction = actions["Standing"]
-        idleAction?.play();
+        actions["Standing"]?.play()
         animationState.current = "Standing"
 
-        scene.traverse((child) => {
-            if (child.isMesh) { 
-                child.castShadow = true;
-            }
-            if (child.isMesh && child.name === "Logo003") {
+        // Traverse once — cache logo mesh, set shadows
+        scene.traverse((child) =>
+        {
+            if (!child.isMesh) return
+            child.castShadow = true
+
+            if (child.name === "Logo003")
+            {
+                logoMesh.current = child
                 child.material = new THREE.MeshStandardMaterial()
-                child.material.toneMapped = false 
+                child.material.toneMapped = false
                 child.material.needsUpdate = true
             }
         })
+    }, [actions, scene])
 
-    }, [ actions , scene]); 
-
-    
     useFrame((state, delta) =>
     {
-        if (!body.current) return; 
+        if (!body.current) return
 
-        scene.traverse((child) => {
-            if (child.isMesh && child.name === "Logo003") {
-                child.material.color.set(logoColor)
-                child.material.emissive.set(logoColor)
-                child.material.emissiveIntensity = logoIntensity
-            }
-        })
+        // Logo glow — direct ref, no traverse
+        if (logoMesh.current)
+        {
+            logoMesh.current.material.color.set(logoColor)
+            logoMesh.current.material.emissive.set(logoColor)
+            logoMesh.current.material.emissiveIntensity = logoIntensity
+        }
 
-       // Ground Detection
-        const colliderCenterY = 0.8     
-        const colliderHalfHeight = 0.75
-
-        const rapierWorld = rapier.world;
-        const bodyOrigin = body.current.translation(); 
-        const rayStartPoint = { 
-            x: bodyOrigin.x, 
-            y: bodyOrigin.y + colliderCenterY, 
-            z: bodyOrigin.z 
-        };
-        
-        const dir = { x: 0, y: -1, z: 0 };
-        const ray = new rapier.rapier.Ray(rayStartPoint, dir);
-        const rayLength = colliderHalfHeight + 0.1; 
-        const hit = rapierWorld.castRay(
-            ray, rayLength, true, null, null, null, null, body.current
+        // Ground detection
+        const bodyOrigin = body.current.translation()
+        const ray = new rapier.rapier.Ray(
+            { x: bodyOrigin.x, y: bodyOrigin.y + 0.8, z: bodyOrigin.z },
+            { x: 0, y: -1, z: 0 }
         )
-        isGrounded.current = hit !== null; 
+        isGrounded.current = rapier.world.castRay(ray, 0.85, true, null, null, null, null, body.current) !== null
 
-        // Coontrol
+        // Movement
         const { forward, backward, leftward, rightward, sprint } = getKeys()
         const isMoving = forward || backward || leftward || rightward
+        const SPEED = sprint ? 3.5 : 2
+        const vel = body.current.linvel()
 
-        // Physics
-       const WALK_SPEED = 2
-        const RUN_SPEED = 3.5
-        const SPEED = sprint ? RUN_SPEED : WALK_SPEED;
-        const vel = body.current.linvel(); 
+        _targetVel.set(0, 0, 0)
+        if (forward)   _targetVel.z -= SPEED
+        if (backward)  _targetVel.z += SPEED
+        if (leftward)  _targetVel.x -= SPEED
+        if (rightward) _targetVel.x += SPEED
 
-        const targetVel = new THREE.Vector3()
-        if (forward) targetVel.z -= SPEED
-        if (backward) targetVel.z += SPEED
-        if (leftward) targetVel.x -= SPEED
-        if (rightward) targetVel.x += SPEED
+        body.current.setLinvel({ x: _targetVel.x, y: vel.y, z: _targetVel.z }, true)
 
-        body.current.setLinvel({ x: targetVel.x, y: vel.y, z: targetVel.z }, true)
+        // Animation
+        const fallName = actions.Falling ? "Falling" : (actions.Fall ? "Fall" : "Jump")
+        const newState = !isGrounded.current ? fallName
+                       : isMoving            ? (sprint ? "Run" : "Walk")
+                       :                       "Standing"
 
-        // Animation State Managment
-        const idleActionName = "Standing"
-        const walkActionName = "Walk"
-        const runActionName = "Run"
-        const jumpActionName = "Jump"
-        const fallActionName = actions.Falling ? "Falling" : (actions.Fall ? "Fall" : jumpActionName)
+        if (!isMoving) body.current.setLinvel({ x: 0, y: vel.y, z: 0 }, true)
 
-        let newState
-        if(!isGrounded.current)
+        if (newState !== animationState.current && actions[newState])
         {
-            newState = fallActionName
-        }
-        else if(isMoving)
-        {
-            newState = sprint ? runActionName : walkActionName
-        }
-        else
-        {
-            newState = idleActionName
-            body.current.setLinvel({ x: 0, y: vel.y, z: 0}, true)
-        }
-        
-        // Animation Transition
-        if(newState !== animationState.current && actions[newState])
-        {
-            const oldAction = actions[animationState.current]
-            const newAction = actions[newState]
-            oldAction?.fadeOut(0.1)
-            newAction?.reset().fadeIn(0.1).play()
+            actions[animationState.current]?.fadeOut(0.1)
+            actions[newState]?.reset().fadeIn(0.1).play()
             animationState.current = newState
         }
 
-        // Rotation Model
-        if(isMoving && isGrounded.current && modelRef.current)
+        // Rotation
+        if (isMoving && isGrounded.current && modelRef.current)
         {
-            const targetAngle = Math.atan2(targetVel.x, targetVel.z) 
-            const targetQuaternion = new THREE.Quaternion().setFromAxisAngle(
-                new THREE.Vector3(0, 1, 0),
-                targetAngle
-            )
-            modelRef.current.quaternion.slerp(targetQuaternion, delta * 15)
+            _targetQuat.setFromAxisAngle(_rotationAxis, Math.atan2(_targetVel.x, _targetVel.z))
+            modelRef.current.quaternion.slerp(_targetQuat, delta * 15)
         }
 
-        // Camera
-        if(cameraActive)
+        // Camera — intro pan from top, lerp speed 0.4 → 5 over 4 s
+        if (cameraActive)
         {
-            const bodyPosition = body.current.translation()
+            _cameraPosition.copy(bodyOrigin).add({ x: cameraX, y: cameraY, z: cameraZ })
+            _cameraTarget.copy(bodyOrigin)
+            _cameraTarget.y += 0.25
 
-            const cameraPosition = new THREE.Vector3()
-            cameraPosition.copy(bodyPosition)
-            cameraPosition.z += cameraZ
-            cameraPosition.y += cameraY
-            cameraPosition.x += cameraX
+            introTimer.current = Math.min(introTimer.current + delta, 4)
+            const lerpSpeed = 0.4 + (introTimer.current / 4) * 4.6
 
-            const cameraTarget = new THREE.Vector3()
-            cameraTarget.copy(bodyPosition)
-            cameraTarget.y += 0.25
-
-            smoothedCameraPosition.lerp(cameraPosition, 5 * delta)
-            smoothedCameraTarget.lerp(cameraTarget, 5 * delta)
+            smoothedCameraPosition.lerp(_cameraPosition, lerpSpeed * delta)
+            smoothedCameraTarget.lerp(_cameraTarget, lerpSpeed * delta)
 
             state.camera.position.copy(smoothedCameraPosition)
             state.camera.lookAt(smoothedCameraTarget)
-
         }
     })
-    
-    return(
-        <Suspense fallback={null} >
-        <RigidBody
-            {...props}
-            ref={body}
-            colliders={false}
-            enabledRotations={[false, false, false]}
-            castShadow
-            friction={0} 
-        >
-            <CapsuleCollider args={[0.3, 0.45]} position={[0.02, 0.85, 0]} />
-            
-            <group ref={modelRef} scale={0.1} position={[0, 0.1, 0]}>
-                <primitive object={scene} />
-            </group>
-        </RigidBody>
-    </Suspense>
+
+    return (
+        <Suspense fallback={null}>
+            <RigidBody
+                {...props}
+                ref={body}
+                colliders={false}
+                enabledRotations={[false, false, false]}
+                castShadow
+                friction={0}
+            >
+                <CapsuleCollider args={[0.3, 0.45]} position={[0.02, 0.85, 0]} />
+                <group ref={modelRef} scale={0.1} position={[0, 0.1, 0]}>
+                    <primitive object={scene} />
+                </group>
+            </RigidBody>
+        </Suspense>
     )
 }

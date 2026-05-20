@@ -3,9 +3,9 @@ import { useMemo, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { PositionalAudio } from '@react-three/drei'
 
-export default function Animals({ nodes })
+export default function Animals({ nodes, musicEnabled })
 {
-    const animalNodes = useMemo(() => 
+    const animalNodes = useMemo(() =>
     {
         return Object.values(nodes).filter((node) =>
             node.name.includes("Cow") ||
@@ -18,13 +18,13 @@ export default function Animals({ nodes })
     return (
         <group>
             {animalNodes.map((node) => (
-                <SingleAnimal key={ node.uuid } node={ node } />
+                <SingleAnimal key={ node.uuid } node={ node } musicEnabled={ musicEnabled } />
             ))}
         </group>
     )
 }
 
-function SingleAnimal({ node })
+function SingleAnimal({ node, musicEnabled })
 {
     const audioRef = useRef()
     const groupRef = useRef() 
@@ -63,7 +63,7 @@ function SingleAnimal({ node })
 
         timerRef.current += delta
         if (timerRef.current > nextPlayRef.current) {
-            if (currentVol > 0 && !audioRef.current.isPlaying) {
+            if (musicEnabled && currentVol > 0 && !audioRef.current.isPlaying) {
                 audioRef.current.play()
             }
             timerRef.current = 0

@@ -11,7 +11,7 @@ import Water from '../Water/Water.jsx'
 
 import Bridge from '../Bridge/Bridge.jsx'
 
-export default function Terrain()
+export default function Terrain({ musicEnabled })
 {
     const { scene, nodes } = useGLTF('/Models/Terrain/Terrain.glb')
 
@@ -44,7 +44,7 @@ export default function Terrain()
                 <primitive object={ scene } />
             </RigidBody>
 
-            <Forest nodes={ nodes } />
+            <Forest nodes={ nodes } musicEnabled={ musicEnabled } />
             <Desert nodes={ nodes } />
             <Magic nodes={ nodes } />
             <Robot nodes={ nodes } />
