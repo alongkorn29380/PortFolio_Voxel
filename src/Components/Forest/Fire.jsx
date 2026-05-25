@@ -10,7 +10,8 @@ const FIRE_COLORS = [
     new THREE.Color('#222222'), 
 ]
 
-export default function Fire({ nodes }) {
+export default function Fire({ nodes }) 
+{
     const fireSpawns = useMemo(() => {
         return Object.values(nodes).filter((node) => 
             node.type === "Mesh" && (node.name.startsWith("Fire") || node.name.startsWith("Spawn_Fire"))

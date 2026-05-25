@@ -1,5 +1,6 @@
 import SnowBushes from './SnowBushes.jsx'
 import SnowTree from './SnowTrees.jsx'
+import Smoke from './Smoke.jsx'
 
 export default function Snow({ nodes })
 {
@@ -7,6 +8,7 @@ export default function Snow({ nodes })
         <>
             <SnowBushes nodes={ nodes } />
             <SnowTree nodes={ nodes } />
+            <Smoke nodes={ nodes } />
         </>
     )
 }
