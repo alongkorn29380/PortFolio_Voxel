@@ -2,6 +2,7 @@ import SnowBushes from './SnowBushes.jsx'
 import SnowTree from './SnowTrees.jsx'
 import Smoke from './Smoke.jsx'
 import SnowGlobe from './SnowGlobe.jsx'
+import SnowFall from './Snow_Fall/Snow_Fall.jsx'
 
 export default function Snow({ nodes })
 {
@@ -11,6 +12,7 @@ export default function Snow({ nodes })
             <SnowTree nodes={ nodes } />
             <Smoke nodes={ nodes } />
             <SnowGlobe nodes={ nodes } />
+            <SnowFall />
         </>
     )
 }
