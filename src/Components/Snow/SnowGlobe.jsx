@@ -6,6 +6,7 @@ import { SkeletonUtils } from 'three-stdlib'
 import { RigidBody } from '@react-three/rapier'
 
 import Flashing_Light from './Flashing_Light/Flashing_Light.jsx'
+import Ball from './Ball.jsx'   
 
 function SingleSnowGlobe({ scene, position, rotation, scale }) {
     const groupRef = useRef()
@@ -24,7 +25,8 @@ function SingleSnowGlobe({ scene, position, rotation, scale }) {
             if (child.isMesh) {
                 nodesMap[child.name] = child
                 
-                if (['Wrie', 'Inner_All', 'Ice_Blue', 'Purple', 'Warm_White'].includes(child.name)) {
+                if (['Wrie', 'Inner_All', 'Ice_Blue', 'Purple', 'Warm_White',
+                     'Red_ball', 'Blue_ball', 'green_ball'].includes(child.name)) {
                     child.visible = false
                 }
             }
@@ -38,6 +40,7 @@ function SingleSnowGlobe({ scene, position, rotation, scale }) {
                 <primitive object={clonedScene} />
                 
                 {extractedNodes.Wrie && <Flashing_Light nodes={extractedNodes} />}
+                {extractedNodes.Red_ball && <Ball nodes={extractedNodes} />}
             </group>
         </RigidBody>
     )
