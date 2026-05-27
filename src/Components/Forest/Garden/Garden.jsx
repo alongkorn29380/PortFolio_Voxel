@@ -96,7 +96,7 @@ export default function Garden({ nodes }) {
                 step: 0.1 
             } 
         }, { collapsed: true })
-    })
+    }, { collapsed: true })
 
     return (
         <group>

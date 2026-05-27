@@ -147,7 +147,7 @@ export default function SnowFall() {
     maxX:       { value: -3,  min: -100, max: 100,  step: 1   },
     minZ:       { value: 6,   min: -100, max: 100,  step: 1   },
     maxZ:       { value: 48,   min: -100, max: 100,  step: 1   },
-  })
+  }, { collapsed: true })
 
   return (
     <group position={[0, posY, 0]}>
