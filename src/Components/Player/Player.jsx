@@ -4,6 +4,7 @@ import { Suspense, useRef, useEffect, useState } from "react"
 import { useFrame } from "@react-three/fiber"
 import * as THREE from 'three'
 import { useControls } from 'leva'
+import { playerPos } from '../../playerStore'
 
 useGLTF.preload("/Models/Human/Chibi.glb")
 
@@ -43,6 +44,17 @@ export default function Player({ cameraActive, ...props })
         cameraZ: { value: 4, min: 0, max: 100, step: 1.0 }
     }, { collapsed: true })
 
+    useEffect(() => {
+        const onTeleport = (e) => {
+            if (!body.current) return
+            const { x, y, z } = e.detail
+            body.current.setTranslation({ x, y, z }, true)
+            body.current.setLinvel({ x: 0, y: 0, z: 0 }, true)
+        }
+        window.addEventListener('teleport', onTeleport)
+        return () => window.removeEventListener('teleport', onTeleport)
+    }, [])
+
     useEffect(() =>
     {
         actions["Standing"]?.play()
@@ -78,6 +90,7 @@ export default function Player({ cameraActive, ...props })
 
         // Ground detection
         const bodyOrigin = body.current.translation()
+        playerPos.set(bodyOrigin.x, bodyOrigin.y, bodyOrigin.z)
         const ray = new rapier.rapier.Ray(
             { x: bodyOrigin.x, y: bodyOrigin.y + 0.8, z: bodyOrigin.z },
             { x: 0, y: -1, z: 0 }

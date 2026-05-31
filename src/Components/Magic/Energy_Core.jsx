@@ -4,9 +4,6 @@ import * as THREE from "three"
 
 export default function Energy_Core({ nodes }) 
 {
-
-    console.log("Energy_Core nodes:", nodes)
-
     // Platforms
     const platforms = Object.values(nodes).filter((node) => 
         node.name.includes("Rotating_Platform")
