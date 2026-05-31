@@ -65,7 +65,7 @@ export default function Portal({ nodes })
             if (e.code !== 'Enter' || !nearRef.current) return
             const dest = nearRef.current === 'A' ? posB : posA
             window.dispatchEvent(new CustomEvent('teleport', {
-                detail: { x: dest.x, y: dest.y + 0, z: dest.z }
+                detail: { x: dest.x, y: dest.y, z: dest.z }
             }))
         }
         window.addEventListener('keydown', onKey)
