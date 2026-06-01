@@ -1,5 +1,6 @@
 import RobotBushes from './RobotBushes.jsx'
 import RobotTree from './RobotTrees.jsx'
+import Sensor from './Sensor.jsx'
 
 export default function Robot({ nodes })
 {
@@ -7,6 +8,7 @@ export default function Robot({ nodes })
         <>
             <RobotBushes nodes={ nodes } />
             <RobotTree nodes={ nodes } />
+            <Sensor nodes={ nodes } />
         </>
     )
 }
