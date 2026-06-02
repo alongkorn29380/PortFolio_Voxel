@@ -1,4 +1,4 @@
-import './style.css'
+﻿import './style.css'
 import { useState, useEffect } from 'react'
 import ReactDom from 'react-dom/client'
 import { Canvas } from '@react-three/fiber'
@@ -7,7 +7,8 @@ import { Leva } from 'leva'
 
 import Experience from './Experience.jsx'
 import LoadingScreen from './Components/LoadingScreen/LoadingScreen.jsx'
-import MarkerModal from './Components/Marker/Performance/Sensor_DashBoard/MarkerModal.jsx'
+import MarkerSensor_DashBoard from './Components/Marker/Performance/Sensor_DashBoard/MarkerSensor_DashBoard.jsx'
+import MarkerArm_Robotic from './Components/Marker/Performance/Arm_Robotic/MarkerArm_Robotic.jsx'
 
 const root = ReactDom.createRoot(document.querySelector('#root'))
 
@@ -18,7 +19,9 @@ function App()
     const [musicEnabled, setMusicEnabled] = useState(false)
     const [worldReady, setWorldReady] = useState(false)
     const [minTimePassed, setMinTimePassed] = useState(false)
-    const [markerModalOpen, setMarkerModalOpen] = useState(false)
+
+    const [sensorModalOpen, setSensorModalOpen] = useState(false)
+    const [armModalOpen, setArmModalOpen] = useState(false)
 
     useEffect(() => {
         const t = setTimeout(() => setMinTimePassed(true), 1500)
@@ -26,21 +29,28 @@ function App()
     }, [])
 
     useEffect(() => {
-        const onOpen  = () => setMarkerModalOpen(true)
-        const onClose = (e) => { if (e.code === 'Escape') setMarkerModalOpen(false) }
-        window.addEventListener('openMarkerModal', onOpen)
-        window.addEventListener('keydown', onClose)
+        const onSensor = () => setSensorModalOpen(true)
+        const onArm    = () => setArmModalOpen(true)
+        const onEscape = (e) => {
+            if (e.code !== 'Escape') return
+            setSensorModalOpen(false)
+            setArmModalOpen(false)
+        }
+        window.addEventListener('openMarkerSensor_DashBoard', onSensor)
+        window.addEventListener('openMarkerArm_Robotic', onArm)
+        window.addEventListener('keydown', onEscape)
         return () => {
-            window.removeEventListener('openMarkerModal', onOpen)
-            window.removeEventListener('keydown', onClose)
+            window.removeEventListener('openMarkerSensor_DashBoard', onSensor)
+            window.removeEventListener('openMarkerArm_Robotic', onArm)
+            window.removeEventListener('keydown', onEscape)
         }
     }, [])
 
     function handleEnter(withMusic)
     {
         setMusicEnabled(withMusic)
-        setEntered(true)                                    
-        setTimeout(() => setShowLoading(false), 700)        
+        setEntered(true)
+        setTimeout(() => setShowLoading(false), 700)
     }
 
     return (
@@ -48,16 +58,17 @@ function App()
             <Leva collapsed />
 
             {showLoading && <LoadingScreen onEnter={handleEnter} ready={worldReady && minTimePassed} />}
-            {markerModalOpen && <MarkerModal onClose={() => setMarkerModalOpen(false)} />}
+            {sensorModalOpen && <MarkerSensor_DashBoard onClose={() => setSensorModalOpen(false)} />}
+            {armModalOpen    && <MarkerArm_Robotic      onClose={() => setArmModalOpen(false)} />}
 
             <KeyboardControls
                 map={[
-                    { name: 'forward',  keys: ['ArrowUp',    'KeyW'] },
-                    { name: 'backward', keys: ['ArrowDown',  'KeyS'] },
-                    { name: 'leftward', keys: ['ArrowLeft',  'KeyA'] },
-                    { name: 'rightward',keys: ['ArrowRight', 'KeyD'] },
-                    { name: 'jump',     keys: ['Space'] },
-                    { name: 'sprint',   keys: ['ShiftLeft'] },
+                    { name: 'forward',   keys: ['ArrowUp',    'KeyW'] },
+                    { name: 'backward',  keys: ['ArrowDown',  'KeyS'] },
+                    { name: 'leftward',  keys: ['ArrowLeft',  'KeyA'] },
+                    { name: 'rightward', keys: ['ArrowRight', 'KeyD'] },
+                    { name: 'jump',      keys: ['Space'] },
+                    { name: 'sprint',    keys: ['ShiftLeft'] },
                 ]}
             >
                 <Canvas

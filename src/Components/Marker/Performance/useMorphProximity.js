@@ -61,5 +61,5 @@ export function useMorphProximity({
         }
     })
 
-    return { proximityState, isNear, showPrompt }
+    return { proximityState, isNear, showPrompt, hidePrompt: () => setShowPrompt(false) }
 }

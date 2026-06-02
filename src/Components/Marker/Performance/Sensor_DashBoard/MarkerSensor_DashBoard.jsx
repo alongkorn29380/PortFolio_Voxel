@@ -1,10 +1,8 @@
-import { useState, useEffect } from 'react'
-import './MarkerModal.css'
+﻿import { useState, useEffect } from 'react'
+import '../MarkerModal.css'
 
 const FULL_TEXT =
-    'ระบบแดชบอร์ดแสดงผลข้อมูลจากเซนเซอร์และดัชนีวัดค่าต่าง ๆ แบบเรียลไทม์ \n\n' +
-    'ระบบตรวจจับคุณภาพอากาศ (Air Quality) โดยจะแสดงค่าในรูปแบบของกราฟ ซึ่งจะมีการเปลี่ยนสีตามระดับความอันตรายของอากาศ เช่น สีเขียวสำหรับอากาศดี สีเหลืองสำหรับอากาศปานกลาง และสีแดงสำหรับอากาศที่เป็นอันตราย ยกตัวอย่างเช่น Temperature Humidity Pressure CarbonDioxide Methan ethanol'
-
+        'ระบบตรวจวัดข้อมูลคุณภาพสภาพอากาศแบบเรียลไทม์ (Sensor Dashboard) \n\n ระบบนี้ทำหน้าที่ตรวจวัดและแสดงผลข้อมูลสภาพแวดล้อมแบบเรียลไทม์ โดยใช้เซนเซอร์เก็บค่าต่างๆ ยกตัวอย่างเช่น อุณหภูมิ ความชื้น ความดันอากาศ คาร์บอนไดออกไซด์ มีเทน และเอทานอล จากนั้นส่งข้อมูลผ่านเครือข่ายมาแสดงผลบนหน้าจอ ทำให้ผู้ใช้สามารถติดตามค่าล่าสุดและแนวโน้มการเปลี่ยนแปลงได้อย่างต่อเนื่องและทันต่อเหตุการณ์และสีของกราฟวามารถบ่งบอกได้ว่าตอนนี้ควรระวังหรือไม่ \n\n'
 export default function MarkerModal({ onClose }) {
     const [revealed, setRevealed] = useState(0)
     const done = revealed >= FULL_TEXT.length
@@ -33,7 +31,7 @@ export default function MarkerModal({ onClose }) {
             <div className="modal-panel" onClick={(e) => e.stopPropagation()}>
 
                 <div className="modal-tabs">
-                    <button className="tab active">📈</button>
+                    <button className="tab active">🌡️</button>
                     <button className="tab tab-close" onClick={onClose}>❌</button>
                 </div>
 
@@ -56,17 +54,16 @@ export default function MarkerModal({ onClose }) {
                                 target="_blank"
                                 rel="noreferrer"
                             >
-                                คลิกที่นี่เพื่อดูผลงาน ↗
+                                คลิ๊กที่นี่เพื่อรับชม Sensor Dashboard   
                             </a>
                         )}
 
                         {done
-                            ? <p className="modal-enter-prompt">▼ Press Enter to close</p>
+                            ? <p className="modal-enter-prompt">Press Enter to close</p>
                             : <p className="modal-enter-skip">Press Enter to skip</p>
                         }
                     </div>
                 </div>
-
             </div>
         </div>
     )
