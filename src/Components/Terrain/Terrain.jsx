@@ -11,6 +11,8 @@ import Water from '../Water/Water.jsx'
 
 import Bridge from '../Bridge/Bridge.jsx'
 
+import Marker from '../Marker/Marker.jsx'
+
 export default function Terrain({ musicEnabled })
 {
     const { scene, nodes } = useGLTF('/Models/Terrain/Terrain.glb')
@@ -52,6 +54,8 @@ export default function Terrain({ musicEnabled })
             <Water areaSize={ 94.7 } level={ -0.1 } />
 
             <Bridge nodes={ nodes } />
+
+            <Marker nodes={ nodes } />
 
         </>
     )

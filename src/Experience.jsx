@@ -48,7 +48,6 @@ export default function Experience({ entered, musicEnabled, onWorldReady })
 
             {(!entered || debugcamera) && <OrbitControls makeDefault />}
 
-            {/* Compile ALL scene shaders once everything is loaded, before user clicks */}
             {playerReady && !entered && <ShaderPrewarm />}
 
             <TimeProvider>
@@ -57,8 +56,6 @@ export default function Experience({ entered, musicEnabled, onWorldReady })
                 <Physics debug={debug} gravity={[gravity.x, gravity.y, gravity.z]}>
 
                     <Suspense fallback={null}>
-                        {/* Mount Player as soon as terrain is ready — hidden behind loading screen.
-                            Rapier + shader init happens here, not on button click. */}
                         {playerReady && (
                             <Player
                                 position={[2, 2, 5]}
@@ -78,7 +75,7 @@ export default function Experience({ entered, musicEnabled, onWorldReady })
                     <Bloom
                         luminanceThreshold={2}
                         mipmapBlur
-                        intensity={1.5}
+                        intensity={0.8}
                         radius={0.4}
                     />
                 </EffectComposer>

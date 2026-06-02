@@ -7,6 +7,7 @@ import { Leva } from 'leva'
 
 import Experience from './Experience.jsx'
 import LoadingScreen from './Components/LoadingScreen/LoadingScreen.jsx'
+import MarkerModal from './Components/Marker/Performance/Sensor_DashBoard/MarkerModal.jsx'
 
 const root = ReactDom.createRoot(document.querySelector('#root'))
 
@@ -17,17 +18,29 @@ function App()
     const [musicEnabled, setMusicEnabled] = useState(false)
     const [worldReady, setWorldReady] = useState(false)
     const [minTimePassed, setMinTimePassed] = useState(false)
+    const [markerModalOpen, setMarkerModalOpen] = useState(false)
 
     useEffect(() => {
         const t = setTimeout(() => setMinTimePassed(true), 1500)
         return () => clearTimeout(t)
     }, [])
 
+    useEffect(() => {
+        const onOpen  = () => setMarkerModalOpen(true)
+        const onClose = (e) => { if (e.code === 'Escape') setMarkerModalOpen(false) }
+        window.addEventListener('openMarkerModal', onOpen)
+        window.addEventListener('keydown', onClose)
+        return () => {
+            window.removeEventListener('openMarkerModal', onOpen)
+            window.removeEventListener('keydown', onClose)
+        }
+    }, [])
+
     function handleEnter(withMusic)
     {
         setMusicEnabled(withMusic)
-        setEntered(true)                                    // Player mounts immediately
-        setTimeout(() => setShowLoading(false), 700)        // screen removed after fade
+        setEntered(true)                                    
+        setTimeout(() => setShowLoading(false), 700)        
     }
 
     return (
@@ -35,6 +48,7 @@ function App()
             <Leva collapsed />
 
             {showLoading && <LoadingScreen onEnter={handleEnter} ready={worldReady && minTimePassed} />}
+            {markerModalOpen && <MarkerModal onClose={() => setMarkerModalOpen(false)} />}
 
             <KeyboardControls
                 map={[
