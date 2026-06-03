@@ -9,6 +9,7 @@ import Experience from './Experience.jsx'
 import LoadingScreen from './Components/LoadingScreen/LoadingScreen.jsx'
 import MarkerSensor_DashBoard from './Components/Marker/Performance/Sensor_DashBoard/MarkerSensor_DashBoard.jsx'
 import MarkerArm_Robotic from './Components/Marker/Performance/Arm_Robotic/MarkerArm_Robotic.jsx'
+import MarkerResume from './Components/Marker/Performance/Resume/MarkerResume.jsx'
 
 const root = ReactDom.createRoot(document.querySelector('#root'))
 
@@ -22,6 +23,7 @@ function App()
 
     const [sensorModalOpen, setSensorModalOpen] = useState(false)
     const [armModalOpen, setArmModalOpen] = useState(false)
+    const [resumeModalOpen, setResumeModalOpen] = useState(false)
 
     useEffect(() => {
         const t = setTimeout(() => setMinTimePassed(true), 1500)
@@ -31,17 +33,21 @@ function App()
     useEffect(() => {
         const onSensor = () => setSensorModalOpen(true)
         const onArm    = () => setArmModalOpen(true)
+        const onResume = () => setResumeModalOpen(true)
         const onEscape = (e) => {
             if (e.code !== 'Escape') return
             setSensorModalOpen(false)
             setArmModalOpen(false)
+            setResumeModalOpen(false)
         }
         window.addEventListener('openMarkerSensor_DashBoard', onSensor)
         window.addEventListener('openMarkerArm_Robotic', onArm)
+        window.addEventListener('openMarkerResume', onResume)
         window.addEventListener('keydown', onEscape)
         return () => {
             window.removeEventListener('openMarkerSensor_DashBoard', onSensor)
             window.removeEventListener('openMarkerArm_Robotic', onArm)
+            window.removeEventListener('openMarkerResume', onResume)
             window.removeEventListener('keydown', onEscape)
         }
     }, [])
@@ -60,6 +66,7 @@ function App()
             {showLoading && <LoadingScreen onEnter={handleEnter} ready={worldReady && minTimePassed} />}
             {sensorModalOpen && <MarkerSensor_DashBoard onClose={() => setSensorModalOpen(false)} />}
             {armModalOpen    && <MarkerArm_Robotic      onClose={() => setArmModalOpen(false)} />}
+            {resumeModalOpen && <MarkerResume           onClose={() => setResumeModalOpen(false)} />}
 
             <KeyboardControls
                 map={[
