@@ -11,6 +11,7 @@ import MarkerSensor_DashBoard from './Components/Marker/Performance/Sensor_DashB
 import MarkerArm_Robotic from './Components/Marker/Performance/Arm_Robotic/MarkerArm_Robotic.jsx'
 import MarkerResume from './Components/Marker/Performance/Resume/MarkerResume.jsx'
 import MarkerCalendar from './Components/Marker/Performance/Calendar/MarkerCalendar.jsx'
+import MarkerSnow_Globe from './Components/Marker/Performance/Snow_Globe/MarkerSnow_Globe.jsx'
 
 const root = ReactDom.createRoot(document.querySelector('#root'))
 
@@ -26,6 +27,7 @@ function App()
     const [armModalOpen, setArmModalOpen] = useState(false)
     const [resumeModalOpen, setResumeModalOpen] = useState(false)
     const [calendarModalOpen, setCalendarModalOpen] = useState(false)
+    const [snowModalOpen, setSnowModalOpen] = useState(false)
 
     useEffect(() => {
         const t = setTimeout(() => setMinTimePassed(true), 1500)
@@ -37,22 +39,27 @@ function App()
         const onArm    = () => setArmModalOpen(true)
         const onResume = () => setResumeModalOpen(true)
         const onCalendar = () => setCalendarModalOpen(true) 
+        const onSnow = () => setSnowModalOpen(true)
         const onEscape = (e) => {
             if (e.code !== 'Escape') return
             setSensorModalOpen(false)
             setArmModalOpen(false)
             setResumeModalOpen(false)
+            setCalendarModalOpen(false)
+            setSnowModalOpen(false)
         }
         window.addEventListener('openMarkerSensor_DashBoard', onSensor)
         window.addEventListener('openMarkerArm_Robotic', onArm)
         window.addEventListener('openMarkerResume', onResume)
         window.addEventListener('openMarkerCalendar', onCalendar)
+        window.addEventListener('openMarkerSnow_Globe', onSnow)
         window.addEventListener('keydown', onEscape)
         return () => {
             window.removeEventListener('openMarkerSensor_DashBoard', onSensor)
             window.removeEventListener('openMarkerArm_Robotic', onArm)
             window.removeEventListener('openMarkerResume', onResume)
             window.removeEventListener('openMarkerCalendar', onCalendar)
+            window.removeEventListener('openMarkerSnow_Globe', onSnow)
             window.removeEventListener('keydown', onEscape)
         }
     }, [])
@@ -73,6 +80,7 @@ function App()
             {armModalOpen    && <MarkerArm_Robotic      onClose={() => setArmModalOpen(false)} />}
             {resumeModalOpen && <MarkerResume           onClose={() => setResumeModalOpen(false)} />}
             {calendarModalOpen && <MarkerCalendar       onClose={() => setCalendarModalOpen(false)} />}
+            {snowModalOpen     && <MarkerSnow_Globe     onClose={() => setSnowModalOpen(false)} />}
 
             <KeyboardControls
                 map={[
