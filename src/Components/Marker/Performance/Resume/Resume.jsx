@@ -35,7 +35,7 @@ export default function Resume() {
         Resume: folder({
             Transform: folder({
                 scale: { value: 0.2, min: 0.1, max: 5, step: 0.1 },
-                position: { value: [26, 1.5, 30 ], step: 0.1 },
+                position: { value: [18, 1.5, 43.5 ], step: 0.1 },
                 rotation: { value: [0, 1.5, 0], step: 0.01 },
             }),
             Particles: folder({ 
