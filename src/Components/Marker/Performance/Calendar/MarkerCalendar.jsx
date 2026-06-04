@@ -41,7 +41,7 @@ export default function MarkerModal({ onClose }) {
                     </div>
 
                     <div className="modal-text">
-                        <h1 className="modal-title">Calendar</h1>
+                        <h1 className="modal-title">CALENDAR</h1>
 
                         <p className="modal-typewriter">
                             {FULL_TEXT.slice(0, revealed)}

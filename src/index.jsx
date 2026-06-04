@@ -12,6 +12,7 @@ import MarkerArm_Robotic from './Components/Marker/Performance/Arm_Robotic/Marke
 import MarkerResume from './Components/Marker/Performance/Resume/MarkerResume.jsx'
 import MarkerCalendar from './Components/Marker/Performance/Calendar/MarkerCalendar.jsx'
 import MarkerSnow_Globe from './Components/Marker/Performance/Snow_Globe/MarkerSnow_Globe.jsx'
+import MarkerChristmas from './Components/Marker/Performance/Christmas/MarkerChristmas.jsx'
 
 const root = ReactDom.createRoot(document.querySelector('#root'))
 
@@ -23,11 +24,12 @@ function App()
     const [worldReady, setWorldReady] = useState(false)
     const [minTimePassed, setMinTimePassed] = useState(false)
 
-    const [sensorModalOpen, setSensorModalOpen] = useState(false)
+    const [sensorModalOpen, setSensorModalOpen] = useState(false)   
     const [armModalOpen, setArmModalOpen] = useState(false)
     const [resumeModalOpen, setResumeModalOpen] = useState(false)
     const [calendarModalOpen, setCalendarModalOpen] = useState(false)
     const [snowModalOpen, setSnowModalOpen] = useState(false)
+    const [christmasModalOpen, setChristmasModalOpen] = useState(false)
 
     useEffect(() => {
         const t = setTimeout(() => setMinTimePassed(true), 1500)
@@ -36,10 +38,11 @@ function App()
 
     useEffect(() => {
         const onSensor = () => setSensorModalOpen(true)
-        const onArm    = () => setArmModalOpen(true)
+        const onArm = () => setArmModalOpen(true)
         const onResume = () => setResumeModalOpen(true)
         const onCalendar = () => setCalendarModalOpen(true) 
         const onSnow = () => setSnowModalOpen(true)
+        const onChristmas = () => setChristmasModalOpen(true)
         const onEscape = (e) => {
             if (e.code !== 'Escape') return
             setSensorModalOpen(false)
@@ -47,12 +50,14 @@ function App()
             setResumeModalOpen(false)
             setCalendarModalOpen(false)
             setSnowModalOpen(false)
+            setChristmasModalOpen(false)
         }
         window.addEventListener('openMarkerSensor_DashBoard', onSensor)
         window.addEventListener('openMarkerArm_Robotic', onArm)
         window.addEventListener('openMarkerResume', onResume)
         window.addEventListener('openMarkerCalendar', onCalendar)
         window.addEventListener('openMarkerSnow_Globe', onSnow)
+        window.addEventListener('openMarkerChristmas', onChristmas)
         window.addEventListener('keydown', onEscape)
         return () => {
             window.removeEventListener('openMarkerSensor_DashBoard', onSensor)
@@ -60,6 +65,7 @@ function App()
             window.removeEventListener('openMarkerResume', onResume)
             window.removeEventListener('openMarkerCalendar', onCalendar)
             window.removeEventListener('openMarkerSnow_Globe', onSnow)
+            window.removeEventListener('openMarkerChristmas', onChristmas)
             window.removeEventListener('keydown', onEscape)
         }
     }, [])
@@ -81,6 +87,7 @@ function App()
             {resumeModalOpen && <MarkerResume           onClose={() => setResumeModalOpen(false)} />}
             {calendarModalOpen && <MarkerCalendar       onClose={() => setCalendarModalOpen(false)} />}
             {snowModalOpen     && <MarkerSnow_Globe     onClose={() => setSnowModalOpen(false)} />}
+            {christmasModalOpen && <MarkerChristmas     onClose={() => setChristmasModalOpen(false)} />}
 
             <KeyboardControls
                 map={[

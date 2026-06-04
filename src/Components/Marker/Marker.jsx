@@ -3,6 +3,7 @@ import Arm_Robotic from './Performance/Arm_Robotic/Arm_Robotic.jsx'
 import Resume from './Performance/Resume/Resume.jsx'
 import Calendar from './Performance/Calendar/Calendar.jsx'
 import Snow_Globe from './Performance/Snow_Globe/Snow_Globe.jsx'    
+import Christmas from './Performance/Christmas/Christmas.jsx'
 
 export default function Marker({ nodes})
 {
@@ -13,6 +14,7 @@ export default function Marker({ nodes})
             <Resume nodes={ nodes } />
             <Calendar nodes={ nodes } />
             <Snow_Globe nodes={ nodes } />
+            <Christmas nodes= { nodes } />
         </>
     )
 }

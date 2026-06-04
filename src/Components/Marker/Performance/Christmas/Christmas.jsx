@@ -9,20 +9,20 @@ import { useMorphProximity } from '../useMorphProximity'
 import particlesVertexShader from '../shaders/particles/vertex.glsl'
 import particlesFragmentShader from '../shaders/particles/fragment.glsl'
 
-const CUBE = 1
-const TEXT = 0
+const CUBE = 0
+const TEXT = 1
 
-export default function Calendar() {
-    const { size, viewport } = useThree()
+export default function Christmas(){
+const { size, viewport } = useThree()
     const materialRef = useRef()
     const indexRef = useRef(CUBE)
 
-    const { scene: modelScene } = useGLTF('/Markers/Calendar.glb', '/draco/')
+    const { scene: modelScene } = useGLTF('/Markers/Christmas.glb', '/draco/')
     
     const particles = useMemo(() => buildParticles(modelScene), [modelScene])
     const geometry = useMemo(() => buildGeometry(particles, CUBE, TEXT), [particles])
     const uniforms = useMemo(() => buildUniforms(size.width, size.height, viewport.dpr), [])
-
+    
     useEffect(() => {
         if (materialRef.current)
             materialRef.current.uniforms.uResolution.value.set(
@@ -32,10 +32,10 @@ export default function Calendar() {
     }, [size, viewport.dpr])
 
     const { scale, position, rotation, proximityRange } = useControls('Marker', {
-        Calendar: folder({
+        Christmas: folder({
             Transform: folder({
                 scale: { value: 0.2, min: 0.1, max: 5, step: 0.1 },
-                position: { value: [32, 1, -35 ], step: 0.1 },
+                position: { value: [-45, 1, 25], step: 0.1 },
                 rotation: { value: [0, 1.5, 0], step: 0.01 },
             }),
             Particles: folder({ 
@@ -43,33 +43,33 @@ export default function Calendar() {
                     value: 0.04, min: 0, max: 2, step: 0.01,
                     onChange: (v) => { if (materialRef.current) materialRef.current.uniforms.uSize.value = v },
                 },
-                colorA: { value: '#8400cb', onChange: (v) => materialRef.current?.uniforms.uColorA.value.set(v) },
-                colorB: { value: '#b1b413', onChange: (v) => materialRef.current?.uniforms.uColorB.value.set(v) },
+                colorA: { value: '#c48806', onChange: (v) => materialRef.current?.uniforms.uColorA.value.set(v) },
+                colorB: { value: '#d50d0d', onChange: (v) => materialRef.current?.uniforms.uColorB.value.set(v) },
                 proximityRange: { value: 2.0, min: 1, max: 20, step: 0.5, label: 'Proximity Range' },
             }),
         }, { collapsed: true }),
     }, { collapsed: true })
-
-    const { proximityState, showPrompt, hidePrompt } = useMorphProximity({
-            geometry, particles, indexRef, materialRef,
-            position, proximityRange,
-            nearIndex: TEXT,
-            farIndex:  CUBE,
-    })
+    
+        const { proximityState, showPrompt, hidePrompt } = useMorphProximity({
+                geometry, particles, indexRef, materialRef,
+                position, proximityRange,
+                nearIndex: TEXT,
+                farIndex:  CUBE,
+        })
 
     useEffect(() => {
         const onKey = (e) => {
             if (e.code !== 'Enter') return
             if (proximityState.current === 'near') {
                 hidePrompt()
-                window.dispatchEvent(new CustomEvent('openMarkerCalendar'))
+                window.dispatchEvent(new CustomEvent('openMarkerChristmas'))
             }
         }
         window.addEventListener('keydown', onKey)
         return () => window.removeEventListener('keydown', onKey)
     }, [hidePrompt])
 
-    return (
+     return (
         <>
             <points geometry={geometry} frustumCulled={false} scale={scale} position={position} rotation={rotation}>
                 <shaderMaterial
@@ -81,7 +81,7 @@ export default function Calendar() {
                     depthWrite={false}
                 />
             </points>
-
+    
             {showPrompt && (
                 <Html
                     position={[position[0], position[1] + 1, position[2]]}
@@ -105,4 +105,4 @@ export default function Calendar() {
     )
 }
 
-useGLTF.preload('/Markers/Calendar.glb')
+useGLTF.preload('/Markers/Christmas.glb')
