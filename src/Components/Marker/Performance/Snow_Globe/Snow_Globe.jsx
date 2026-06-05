@@ -82,25 +82,23 @@
                     />
                 </points>
 
-                {showPrompt && (
-                    <Html
-                        position={[position[0], position[1] + 1, position[2]]}
-                        center
-                        style={{ pointerEvents: 'none' }}
-                    >
-                        <div style={{
-                            background: 'rgba(0, 0, 0, 0.75)',
-                            color: '#fff',
-                            padding: '6px 14px',
-                            borderRadius: '6px',
-                            fontSize: '13px',
-                            fontFamily: 'sans-serif',
-                            whiteSpace: 'nowrap',
-                        }}>
-                            Press <strong>Enter</strong> to open
-                        </div>
-                    </Html>
-                )}
+                <Html
+                    position={[position[0], position[1] + 1, position[2]]}
+                    center
+                    style={{ pointerEvents: 'none', display: showPrompt ? 'block' : 'none' }}
+                >
+                    <div style={{
+                        background: 'rgba(0, 0, 0, 0.75)',
+                        color: '#fff',
+                        padding: '6px 14px',
+                        borderRadius: '6px',
+                        fontSize: '13px',
+                        fontFamily: 'sans-serif',
+                        whiteSpace: 'nowrap',
+                    }}>
+                        Press <strong>Enter</strong> to open
+                    </div>
+                </Html>
             </>
         )
     }

@@ -143,8 +143,8 @@ export default function Player({ cameraActive, ...props })
             introTimer.current = Math.min(introTimer.current + delta, 4)
             const lerpSpeed = 0.4 + (introTimer.current / 4) * 4.6
 
-            smoothedCameraPosition.lerp(_cameraPosition, lerpSpeed * delta)
-            smoothedCameraTarget.lerp(_cameraTarget, lerpSpeed * delta)
+            smoothedCameraPosition.lerp(_cameraPosition, 1 - Math.exp(-lerpSpeed * delta))
+            smoothedCameraTarget.lerp(_cameraTarget, 1 - Math.exp(-lerpSpeed * delta))
 
             state.camera.position.copy(smoothedCameraPosition)
             state.camera.lookAt(smoothedCameraTarget)

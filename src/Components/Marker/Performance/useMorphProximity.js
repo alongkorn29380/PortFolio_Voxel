@@ -17,7 +17,6 @@ export function useMorphProximity({
     const morphRef       = useRef({ active: false, elapsed: 0 })
     const objectPosRef   = useRef(new THREE.Vector3())
     const proximityState = useRef('far')
-    const [isNear, setIsNear] = useState(false)
     const [showPrompt, setShowPrompt] = useState(false)
 
     const morph = (index) => {
@@ -33,23 +32,19 @@ export function useMorphProximity({
     }
 
     useFrame((state, delta) => {
-        // Proximity check
         objectPosRef.current.set(position[0], position[1], position[2])
         const dist = playerPos.distanceTo(objectPosRef.current)
 
         if (dist < proximityRange && proximityState.current !== 'near') {
             proximityState.current = 'near'
-            setIsNear(true)
             setShowPrompt(false)
             morph(nearIndex)
         } else if (dist >= proximityRange && proximityState.current !== 'far') {
             proximityState.current = 'far'
-            setIsNear(false)
             setShowPrompt(false)
             morph(farIndex)
         }
 
-        // Animate progress
         const m = morphRef.current
         if (!m.active || !materialRef.current) return
         m.elapsed += delta
@@ -61,5 +56,5 @@ export function useMorphProximity({
         }
     })
 
-    return { proximityState, isNear, showPrompt, hidePrompt: () => setShowPrompt(false) }
+    return { proximityState, isNear: proximityState.current === 'near', showPrompt, hidePrompt: () => setShowPrompt(false) }
 }

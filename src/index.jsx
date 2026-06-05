@@ -109,6 +109,7 @@ function App()
             >
                 <Canvas
                     shadows
+                    dpr={[1, 1.5]}
                     camera={{
                         fov: 45,
                         near: 0.1,

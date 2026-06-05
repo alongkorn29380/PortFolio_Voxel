@@ -51,21 +51,21 @@ export default function Flashing_Light({ nodes }) {
             blueRef.current.uTime += delta
             blueRef.current.uSpeed = Blue_Speed
             blueRef.current.uOffset = 0.0
-            blueRef.current.uColor = new THREE.Color(Blue_Light)
+            blueRef.current.uColor.set(Blue_Light)
         }
 
         if (purpleRef.current) {
             purpleRef.current.uTime += delta
-            purpleRef.current.uSpeed = Purple_Speed 
+            purpleRef.current.uSpeed = Purple_Speed
             purpleRef.current.uOffset = Purple_Offset
-            purpleRef.current.uColor = new THREE.Color(Purple_Light)
+            purpleRef.current.uColor.set(Purple_Light)
         }
 
         if (whiteRef.current) {
             whiteRef.current.uTime += delta
-            whiteRef.current.uSpeed = White_Speed 
+            whiteRef.current.uSpeed = White_Speed
             whiteRef.current.uOffset = White_Offset
-            whiteRef.current.uColor = new THREE.Color(White_Light)
+            whiteRef.current.uColor.set(White_Light)
         }
     })
     
