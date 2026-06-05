@@ -26,6 +26,9 @@ export default function Robot({ nodes })
             <Suspense fallback={null}>
                 <Gpgpu modelPath="/Models/Robots/model.glb" levaFolder="GPGPU Robot" />
             </Suspense>
-        </>
+            <Suspense fallback={null}>
+                <Gpgpu modelPath="/Models/Robots/model.glb" levaFolder="GPGPU Model 2" />
+            </Suspense>
+        </> 
     )
 }

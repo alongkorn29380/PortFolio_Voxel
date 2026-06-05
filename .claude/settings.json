@@ -1,7 +1,13 @@
 {
   "permissions": {
     "allow": [
-      "Read(//c/Users/along/OneDrive/**)"
+      "Read(//c/Users/along/OneDrive/**)",
+      "Read(//c/Users/along/.claude/plugins/cache/claude-plugins-official/superpowers/5.1.0/skills/subagent-driven-development/**)",
+      "Bash(git commit *)",
+      "Read(//c/Users/along/.claude/plugins/cache/claude-plugins-official/superpowers/5.1.0/skills/requesting-code-review/**)",
+      "Bash(node -e \"const fs = require\\('fs'\\); const f = fs.existsSync\\('src/Components/Robot/Holographic/Holographic.jsx'\\); console.log\\('Holographic.jsx exists:', f\\)\")",
+      "Bash(node -e \"const fs = require\\('fs'\\); ['HalftoneCube', 'HalftoneIcosahedron', 'HalftoneTrousKont'].forEach\\(f => console.log\\(f, fs.existsSync\\('src/Components/Robot/Halftone/' + f + '.jsx'\\)\\)\\)\")",
+      "Bash(npm ls *)"
     ]
   }
 }
