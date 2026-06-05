@@ -79,7 +79,7 @@ export default function Gpgpu({ modelPath, levaFolder = 'GPGPU' }) {
         }
 
         return { particlesUvArray: uvArray, sizesArray: sArray, positionArray: pArray }
-    }, [gpgpuSize, gl, count, baseGeometry, totalParticles])
+    }, [gpgpuSize, gl, count, baseGeometry, totalParticles, modelPath])
 
     useEffect(() => {
         if (!gpgpuRef.current.variable) return
