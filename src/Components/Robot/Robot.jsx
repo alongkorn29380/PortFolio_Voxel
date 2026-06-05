@@ -4,6 +4,9 @@ import Sensor from './Sensor.jsx'
 import HolographicPlanet from './Holographic/HolographicPlanet.jsx'
 import HolographicSatellite from './Holographic/HolographicSatellite.jsx'
 import HolographicCosmic from './Holographic/HolographicCosmic.jsx'
+import HalftoneCube from './Halftone/HalftoneCube.jsx'
+import HalftoneIcosahedron from './Halftone/HalftoneIcosahedron.jsx'
+import HalftoneTorusKnot from './Halftone/HalftoneTrousKont.jsx'
 
 export default function Robot({ nodes })
 {
@@ -15,6 +18,9 @@ export default function Robot({ nodes })
             <HolographicPlanet />
             <HolographicSatellite />
             <HolographicCosmic />
+            <HalftoneCube />
+            <HalftoneIcosahedron />
+            <HalftoneTorusKnot />
         </>
     )
 }

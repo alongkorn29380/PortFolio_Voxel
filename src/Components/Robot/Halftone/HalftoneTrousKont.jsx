@@ -4,7 +4,7 @@ import { useControls, folder } from 'leva'
 
 import { HalftoneMaterial } from './HalftoneMaterial.js'
 
-export default function HalftoneCube() {
+export default function HalftoneTorusKnot() {
     const meshRef = useRef()
     const { size } = useThree()
 
@@ -13,18 +13,18 @@ export default function HalftoneCube() {
         shadowRepetitions, lightRepetitions,
         speed, posX, posY, posZ, scale
     } = useControls('Halftone', {
-        Cube: folder ({ 
+        Torusknot: folder({
             color: '#ff794d',
             shadowColor: '#8e19b8',
             lightColor: '#e5ffe0',
             shadowRepetitions: { value: 100, min: 1, max: 300, step: 1 },
             lightRepetitions: { value: 130, min: 1, max: 300, step: 1 },
             speed: { value: 0.5, min: 0, max: 5, step: 0.1 },
-            posX: { value: -7.5, min: -20, max: 20, step: 0.1 },
-            posY: { value: 1.8, min: -20, max: 20, step: 0.1 },
-            posZ: { value: 12.4, min: -20, max: 20, step: 0.1 },
-            scale: { value: 1, min: 0.1, max: 3, step: 0.05 }
-        }, { collapsed: true })
+            posX: { value: -12.7, min: -20, max: 20, step: 0.1 },
+            posY: { value: 2.2, min: -20, max: 20, step: 0.1 },
+            posZ: { value: 7.0, min: -20, max: 20, step: 0.1 },
+            scale: { value: 0.6, min: 0.1, max: 3, step: 0.05 }
+        }, { collapsed: true})
     }, { collapsed: true })
 
     const material = useMemo(() => new HalftoneMaterial(), [])
@@ -50,7 +50,7 @@ export default function HalftoneCube() {
     return (
         <group position={[posX, posY, posZ]} scale={scale}>
             <mesh ref={meshRef} material={material}>
-                <boxGeometry args={[1, 1, 1]} />   
+                <torusKnotGeometry args={[1, 0.4, 100, 16, 2, 3]} />
             </mesh>
         </group>
     )

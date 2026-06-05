@@ -5,7 +5,7 @@ import * as THREE from 'three'
 
 import { HolographicMaterial } from './HolographicMaterial.js'
 
-export default function Holographic() {
+export default function HolographicPlanet() {
     const sphereRef = useRef()
     const ringARef = useRef()
     const ringBRef = useRef()
