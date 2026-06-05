@@ -9,23 +9,33 @@ import particlesVertexShader from './shaders/particles/vertex.glsl'
 import particlesFragmentShader from './shaders/particles/fragment.glsl'
 import gpgpuParticlesShader from './shaders/gpgpu/particles.glsl'
 
-export default function Gpgpu() {
+export default function Gpgpu({ modelPath, levaFolder = 'GPGPU' }) {
     const { gl, size } = useThree()
     const pointsRef = useRef()
     const gpgpuRef = useRef({ computation: null, variable: null })
 
-    const { scene: modelScene } = useGLTF('/Models/Robots/model.glb')
+    const { scene: modelScene } = useGLTF(modelPath)
 
     const baseGeometry = modelScene.children[0].geometry
     const count = baseGeometry.attributes.position.count
     const gpgpuSize = Math.ceil(Math.sqrt(count))
     const totalParticles = gpgpuSize * gpgpuSize
 
-    const tweaks = useControls('GPGPU', {
+    const {
+        uSize,
+        uFlowFieldInfluence,
+        uFlowFieldStrength,
+        uFlowFieldFrequency,
+        posX, posY, posZ, scale
+    } = useControls(levaFolder, {
         uSize: { value: 0.07, min: 0, max: 1, step: 0.001 },
         uFlowFieldInfluence: { value: 0.5, min: 0, max: 1, step: 0.001 },
         uFlowFieldStrength: { value: 2, min: 0, max: 10, step: 0.001 },
         uFlowFieldFrequency: { value: 0.5, min: 0, max: 1, step: 0.001 },
+        posX: { value: 0, min: -10, max: 20, step: 0.1 },
+        posY: { value: 0, min: -10, max: 20, step: 0.1 },
+        posZ: { value: 0, min: -10, max: 20, step: 0.1 },
+        scale: { value: 1, min: 0.1, max: 5, step: 0.05 },
     }, { collapsed: true })
 
     const { particlesUvArray, sizesArray, positionArray } = useMemo(() => {
@@ -74,10 +84,10 @@ export default function Gpgpu() {
     useEffect(() => {
         if (!gpgpuRef.current.variable) return
         const uniforms = gpgpuRef.current.variable.material.uniforms
-        uniforms.uFlowFieldInfluence.value = tweaks.uFlowFieldInfluence
-        uniforms.uFlowFieldStrength.value = tweaks.uFlowFieldStrength
-        uniforms.uFlowFieldFrequency.value = tweaks.uFlowFieldFrequency
-    }, [tweaks])
+        uniforms.uFlowFieldInfluence.value = uFlowFieldInfluence
+        uniforms.uFlowFieldStrength.value = uFlowFieldStrength
+        uniforms.uFlowFieldFrequency.value = uFlowFieldFrequency
+    }, [uFlowFieldInfluence, uFlowFieldStrength, uFlowFieldFrequency])
 
     const renderUniforms = useMemo(() => ({
         uSize: new THREE.Uniform(0.07),
@@ -91,8 +101,8 @@ export default function Gpgpu() {
     }, [size, renderUniforms])
 
     useEffect(() => {
-        renderUniforms.uSize.value = tweaks.uSize
-    }, [tweaks.uSize, renderUniforms])
+        renderUniforms.uSize.value = uSize
+    }, [uSize, renderUniforms])
 
     useFrame((state, delta) => {
         const { computation, variable } = gpgpuRef.current
@@ -111,22 +121,22 @@ export default function Gpgpu() {
     const colorAttribute = baseGeometry.attributes.color
 
     return (
-        <points ref={pointsRef}>
-            <bufferGeometry>
-                <bufferAttribute attach="attributes-position" count={totalParticles} array={positionArray} itemSize={3} />
-                <bufferAttribute attach="attributes-aParticlesUv" count={totalParticles} array={particlesUvArray} itemSize={2} />
-                {colorAttribute && (
-                    <bufferAttribute attach="attributes-aColor" {...colorAttribute} />
-                )}
-                <bufferAttribute attach="attributes-aSize" count={totalParticles} array={sizesArray} itemSize={1} />
-            </bufferGeometry>
-            <shaderMaterial
-                vertexShader={particlesVertexShader}
-                fragmentShader={particlesFragmentShader}
-                uniforms={renderUniforms}
-            />
-        </points>
+        <group position={[posX, posY, posZ]} scale={scale}>
+            <points ref={pointsRef}>
+                <bufferGeometry>
+                    <bufferAttribute attach="attributes-position" count={totalParticles} array={positionArray} itemSize={3} />
+                    <bufferAttribute attach="attributes-aParticlesUv" count={totalParticles} array={particlesUvArray} itemSize={2} />
+                    {colorAttribute && (
+                        <bufferAttribute attach="attributes-aColor" {...colorAttribute} />
+                    )}
+                    <bufferAttribute attach="attributes-aSize" count={totalParticles} array={sizesArray} itemSize={1} />
+                </bufferGeometry>
+                <shaderMaterial
+                    vertexShader={particlesVertexShader}
+                    fragmentShader={particlesFragmentShader}
+                    uniforms={renderUniforms}
+                />
+            </points>
+        </group>
     )
 }
-
-useGLTF.preload('/Models/Robots/model.glb')
