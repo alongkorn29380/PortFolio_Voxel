@@ -8,7 +8,8 @@ import HolographicCosmic from './Holographic/HolographicCosmic.jsx'
 import HalftoneCube from './Halftone/HalftoneCube.jsx'
 import HalftoneIcosahedron from './Halftone/HalftoneIcosahedron.jsx'
 import HalftoneTorusKnot from './Halftone/HalftoneTrousKont.jsx'
-import Gpgpu from './GPGPU/Gpgpu.jsx'
+import GpgpuRobot from './GPGPU/GpgpuRobot.jsx'
+import GpgpuEarth from './GPGPU/GpgpuEarth.jsx'
 
 export default function Robot({ nodes })
 {
@@ -24,11 +25,11 @@ export default function Robot({ nodes })
             <HalftoneIcosahedron />
             <HalftoneTorusKnot />
             <Suspense fallback={null}>
-                <Gpgpu modelPath="/Models/Robots/model.glb" levaFolder="GPGPU Robot" />
+                <GpgpuRobot />
             </Suspense>
             <Suspense fallback={null}>
-                <Gpgpu modelPath="/Models/Robots/model.glb" levaFolder="GPGPU Model 2" />
+                <GpgpuEarth />
             </Suspense>
-        </> 
+        </>
     )
 }

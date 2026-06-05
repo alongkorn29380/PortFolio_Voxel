@@ -7,7 +7,12 @@
       "Read(//c/Users/along/.claude/plugins/cache/claude-plugins-official/superpowers/5.1.0/skills/requesting-code-review/**)",
       "Bash(node -e \"const fs = require\\('fs'\\); const f = fs.existsSync\\('src/Components/Robot/Holographic/Holographic.jsx'\\); console.log\\('Holographic.jsx exists:', f\\)\")",
       "Bash(node -e \"const fs = require\\('fs'\\); ['HalftoneCube', 'HalftoneIcosahedron', 'HalftoneTrousKont'].forEach\\(f => console.log\\(f, fs.existsSync\\('src/Components/Robot/Halftone/' + f + '.jsx'\\)\\)\\)\")",
-      "Bash(npm ls *)"
+      "Bash(npm ls *)",
+      "Bash(Remove-Item \"c:\\\\Users\\\\along\\\\OneDrive\\\\เดสก์ท็อป\\\\PortFolio\\\\src\\\\Components\\\\Robot\\\\GPGPU\\\\GpgpuBoat.jsx\")"
+    ],
+    "additionalDirectories": [
+      "c:\\Users\\along\\OneDrive\\?????????\\PortFolio\\src\\Components\\Robot\\GPGPU",
+      "c:\\Users\\along\\OneDrive\\?????????\\PortFolio\\src\\Components\\Robot\\Halftone"
     ]
   }
 }

@@ -5,8 +5,10 @@ uniform sampler2D uParticlesTexture;
 attribute vec2 aParticlesUv;
 attribute vec3 aColor;
 attribute float aSize;
+attribute vec2 aModelUv;
 
 varying vec3 vColor;
+varying vec2 vModelUv;
 
 void main()
 {
@@ -28,4 +30,5 @@ void main()
 
     // Varyings
     vColor = aColor;
+    vModelUv = aModelUv;
 }

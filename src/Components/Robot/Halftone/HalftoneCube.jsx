@@ -13,7 +13,7 @@ export default function HalftoneCube() {
         shadowRepetitions, lightRepetitions,
         speed, posX, posY, posZ, scale
     } = useControls('Halftone', {
-        Cube: folder ({ 
+        Cube: folder ({
             color: '#ff794d',
             shadowColor: '#8e19b8',
             lightColor: '#e5ffe0',
@@ -50,7 +50,7 @@ export default function HalftoneCube() {
     return (
         <group position={[posX, posY, posZ]} scale={scale}>
             <mesh ref={meshRef} material={material}>
-                <boxGeometry args={[1, 1, 1]} />   
+                <boxGeometry args={[1, 1, 1]} />
             </mesh>
         </group>
     )
