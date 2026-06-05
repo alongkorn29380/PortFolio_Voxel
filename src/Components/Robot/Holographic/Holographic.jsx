@@ -1,32 +1,27 @@
 import { useRef, useMemo, useEffect } from 'react'
-import { useFrame, extend } from '@react-three/fiber'
-import { shaderMaterial } from '@react-three/drei'
+import { useFrame } from '@react-three/fiber'
 import { useControls } from 'leva'
 import * as THREE from 'three'
 
-import holographicVertexShader from './shaders/holographic/vertex.glsl'
-import holographicFragmentShader from './shaders/holographic/fragment.glsl'
-
-const HolographicMaterial = shaderMaterial(
-    { uTime: 0, uColor: new THREE.Color('#70c1ff') },
-    holographicVertexShader,
-    holographicFragmentShader
-)
-
-extend({ HolographicMaterial })
+import { HolographicMaterial } from './HolographicMaterial.js'
 
 export default function Holographic() {
     const sphereRef = useRef()
     const ringARef = useRef()
     const ringBRef = useRef()
 
-    const { color, speed } = useControls('Hologram', {
+    const { color, speed, posX, posY, posZ, scale } = useControls('Hologram', {
         color: '#70c1ff',
-        speed: { value: 1.0, min: 0, max: 5, step: 0.1 }
+        speed: { value: 1.0, min: 0, max: 5, step: 0.1 },
+        posX: { value: 0, min: -5, max: 5, step: 0.1 },
+        posY: { value: 0, min: -5, max: 5, step: 0.1 },
+        posZ: { value: 0, min: -5, max: 5, step: 0.1 },
+        scale: { value: 1, min: 0.1, max: 3, step: 0.05 }
     }, { collapsed: true })
 
     const material = useMemo(() => {
         const mat = new HolographicMaterial()
+        mat.uTime = 0
         mat.transparent = true
         mat.side = THREE.DoubleSide
         mat.depthWrite = false
@@ -48,7 +43,7 @@ export default function Holographic() {
     })
 
     return (
-        <group position={[0, 0, 0]}>
+        <group position={[posX, posY, posZ]} scale={scale}>
             <mesh ref={sphereRef} material={material}>
                 <sphereGeometry args={[0.8, 32, 32]} />
             </mesh>
