@@ -35,7 +35,7 @@
             Me: folder({ 
                 Transform: folder({
                     scale: { value: 0.2, min: 0.1, max: 5, step: 0.1 },
-                    position: { value: [3.5, 1.0, 5.0], step: 0.1 },
+                    position: { value: [6, 1.0, 5.0], step: 0.1 },
                     rotation: { value: [0, 1.5, 0], step: 0.01 },
                 }),
                 Particles: folder({ 

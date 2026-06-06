@@ -58,7 +58,7 @@ export default function Experience({ entered, musicEnabled, onWorldReady })
                     <Suspense fallback={null}>
                         {playerReady && (
                             <Player
-                                position={[2, 2, 5]}
+                                position={[4, 2, 5]}
                                 cameraActive={entered && !debugcamera}
                             />
                         )}
