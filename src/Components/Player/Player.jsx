@@ -29,7 +29,7 @@ export default function Player({ cameraActive, ...props })
     const animationState = useRef("Standing")
     const isGrounded     = useRef(false)
 
-    const [smoothedCameraPosition] = useState(() => new THREE.Vector3(2, -20, 5))
+    const [smoothedCameraPosition] = useState(() => new THREE.Vector3(2, 20, 5))
     const [smoothedCameraTarget]   = useState(() => new THREE.Vector3(2, 2.25, 5))
     const introTimer = useRef(0)
 

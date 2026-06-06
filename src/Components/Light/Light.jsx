@@ -46,7 +46,7 @@ export default function Lights() {
     }
 
     const config = useControls('Time System', {
-        enableFog: { value: false, label: 'Enable Fog' }, 
+        enableFog: { value: true, label: 'Enable Fog' }, 
 
         'Day Settings': folder({
             dayColor: { value: data.day.lightColor, label: 'LightColor' },
