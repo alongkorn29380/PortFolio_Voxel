@@ -23,10 +23,10 @@ export default function Mana()
             s1_posZ:   { value: 31,   min: -100, max: 100, step: 1, label: 'positionZ' },
         }, { collapsed: true }),
         'Segment 2': folder({
-            s2_scaleX: { value: 21.9, min: 0, max: 50,   step: 0.1, label: 'scaleX' },
+            s2_scaleX: { value: 32, min: 0, max: 50,   step: 0.1, label: 'scaleX' },
             s2_scaleY: { value: 3.6,  min: 0, max: 50,   step: 0.1, label: 'scaleY' },
             s2_scaleZ: { value: 46.8, min: 0, max: 50,   step: 0.1, label: 'scaleZ' },
-            s2_posX:   { value: 25,   min: -100, max: 100, step: 1, label: 'positionX' },
+            s2_posX:   { value: 30,   min: -100, max: 100, step: 1, label: 'positionX' },
             s2_posY:   { value: 2,    min: -100, max: 100, step: 1, label: 'positionY' },
             s2_posZ:   { value: 24,   min: -100, max: 100, step: 1, label: 'positionZ' },
         }, { collapsed: true }),

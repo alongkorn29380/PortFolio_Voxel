@@ -10,6 +10,7 @@ import Snow from '../Snow/Snow.jsx'
 import Water from '../Water/Water.jsx'
 
 import Bridge from '../Bridge/Bridge.jsx'
+import Boundary from './Boundary.jsx'
 
 import Marker from '../Marker/Marker.jsx'
 
@@ -56,6 +57,7 @@ export default function Terrain({ musicEnabled })
             <Bridge nodes={ nodes } />
 
             <Marker nodes={ nodes } />
+            <Boundary />
 
         </>
     )
