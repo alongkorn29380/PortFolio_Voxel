@@ -24,7 +24,8 @@ export default function GpgpuRobot() {
                     best = child
             }
         })
-        return { baseGeometry: best.geometry, modelTexture: best?.material?.map ?? null }
+        const mat = Array.isArray(best?.material) ? best.material[0] : best?.material
+        return { baseGeometry: best.geometry, modelTexture: mat?.map ?? null }
     }, [modelScene])
 
     const count = baseGeometry.attributes.position.count
@@ -104,20 +105,50 @@ export default function GpgpuRobot() {
 
     const colorArray = useMemo(() => {
         const dst = new Float32Array(totalParticles * 3).fill(1)
-        const src = baseGeometry.attributes.color
-        if (!src) return dst
-        const isBytes = src.array instanceof Uint8Array
-        const stride  = src.itemSize
-        const len     = Math.min(src.count, totalParticles)
-        for (let i = 0; i < len; i++) {
-            const s = i * stride
-            const d = i * 3
-            dst[d]     = isBytes ? src.array[s]     / 255 : src.array[s]
-            dst[d + 1] = isBytes ? src.array[s + 1] / 255 : src.array[s + 1]
-            dst[d + 2] = isBytes ? src.array[s + 2] / 255 : src.array[s + 2]
+
+        // 1. Vertex colors
+        const colorSrc = baseGeometry.attributes.color
+        if (colorSrc) {
+            const isBytes = colorSrc.array instanceof Uint8Array
+            const stride  = colorSrc.itemSize
+            const len     = Math.min(colorSrc.count, totalParticles)
+            for (let i = 0; i < len; i++) {
+                const s = i * stride; const d = i * 3
+                dst[d]     = isBytes ? colorSrc.array[s]     / 255 : colorSrc.array[s]
+                dst[d + 1] = isBytes ? colorSrc.array[s + 1] / 255 : colorSrc.array[s + 1]
+                dst[d + 2] = isBytes ? colorSrc.array[s + 2] / 255 : colorSrc.array[s + 2]
+            }
+            return dst
         }
+
+        // 2. Sample texture via canvas (pre-bake at load time)
+        const uvSrc = baseGeometry.attributes.uv
+        if (modelTexture?.image && uvSrc) {
+            try {
+                const img = modelTexture.image
+                const W = img.width  || 512
+                const H = img.height || 512
+                const canvas = document.createElement('canvas')
+                canvas.width = W; canvas.height = H
+                const ctx = canvas.getContext('2d')
+                ctx.drawImage(img, 0, 0, W, H)
+                const { data } = ctx.getImageData(0, 0, W, H)
+                const len = Math.min(uvSrc.count, totalParticles)
+                for (let i = 0; i < len; i++) {
+                    const u  = ((uvSrc.array[i * 2]     % 1) + 1) % 1
+                    const v  = ((uvSrc.array[i * 2 + 1] % 1) + 1) % 1
+                    const px = Math.floor(u * W)
+                    const py = Math.floor((1 - v) * H)   // flip Y
+                    const idx = (py * W + px) * 4
+                    dst[i * 3]     = data[idx]     / 255
+                    dst[i * 3 + 1] = data[idx + 1] / 255
+                    dst[i * 3 + 2] = data[idx + 2] / 255
+                }
+            } catch (_) { /* canvas tainted — leave white */ }
+        }
+
         return dst
-    }, [baseGeometry, totalParticles])
+    }, [baseGeometry, totalParticles, modelTexture])
 
     useEffect(() => {
         if (!gpgpuRef.current.variable) return
@@ -135,10 +166,10 @@ export default function GpgpuRobot() {
         uHasTexture:       new THREE.Uniform(false),
     }), [])
 
+    // Colors pre-baked into aColor — GPU texture sampling not needed
     useEffect(() => {
-        renderUniforms.uTexture.value    = modelTexture
-        renderUniforms.uHasTexture.value = modelTexture !== null
-    }, [modelTexture, renderUniforms])
+        renderUniforms.uHasTexture.value = false
+    }, [renderUniforms])
 
     useEffect(() => {
         const pixelRatio = Math.min(window.devicePixelRatio, 2)
