@@ -162,14 +162,9 @@ export default function GpgpuRobot() {
         uSize:             new THREE.Uniform(0.07),
         uResolution:       new THREE.Uniform(new THREE.Vector2()),
         uParticlesTexture: new THREE.Uniform(null),
-        uTexture:          new THREE.Uniform(null),
-        uHasTexture:       new THREE.Uniform(false),
-    }), [])
-
-    // Colors pre-baked into aColor — GPU texture sampling not needed
-    useEffect(() => {
-        renderUniforms.uHasTexture.value = false
-    }, [renderUniforms])
+        uTexture:          new THREE.Uniform(modelTexture),
+        uHasTexture:       new THREE.Uniform(modelTexture !== null),
+    }), [modelTexture])
 
     useEffect(() => {
         const pixelRatio = Math.min(window.devicePixelRatio, 2)
