@@ -6,8 +6,8 @@ import { useControls } from 'leva'
 import { EffectComposer, Bloom } from '@react-three/postprocessing'
 import { useThree } from '@react-three/fiber'
 
-import Terrain from './components/Terrain/Terrain.jsx'
-import Player from './components/Player/Player.jsx'
+import Terrain from './Components/Terrain/Terrain.jsx'
+import Player from './Components/Player/Player.jsx'
 import Light from './Components/Light/Light.jsx'
 import TimeProvider from './Components/Context/TimeContext.jsx'
 
