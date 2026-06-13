@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import '../MarkerModal.css'
 
 const FULL_TEXT =
-        'เรซูเม่ \n\n เรซูเมอันเก่าเนื่องจากผ่านมานานแล้วจึงมีการอัพดท \n\n'
+        'เรซูเม่ \n\n เรซูเม่ในรูปแบบกึ่งๆ 2D และ 3D สำหรับการดูข้อมูลบนโทรศัพท์ \n\n'
 export default function MarkerModal({ onClose }) {
     const [revealed, setRevealed] = useState(0)
     const done = revealed >= FULL_TEXT.length
@@ -37,7 +37,7 @@ export default function MarkerModal({ onClose }) {
 
                 <div className="modal-body">
                     <div className="modal-image">
-                        <img src="../Images/Reusme.png" alt="Preview" />
+                        <img src="../Images/Resume.png" alt="Preview" />
                     </div>
 
                     <div className="modal-text">
@@ -50,7 +50,7 @@ export default function MarkerModal({ onClose }) {
                         {done && (
                             <a
                                 className="modal-link"
-                                href="https://resume-alongkorn.vercel.app/"
+                                href="https://card-resume.netlify.app/"
                                 target="_blank"
                                 rel="noreferrer"
                             >
